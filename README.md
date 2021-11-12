@@ -1,6 +1,6 @@
 # Gadget
-mkdir build
-cd build
-cmake ..
-make
-./gadget config.txt
+mkdir build. 
+cd build. 
+cmake ..  
+make. 
+./gadget config.txt. 
