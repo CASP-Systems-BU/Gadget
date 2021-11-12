@@ -1,0 +1,5 @@
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - Unix Makefiles" /Users/showanasyabi/Desktop/gadget/tests
+-- Found Python: /usr/local/Frameworks/Python.framework/Versions/3.9/bin/python3.9 (found version "3.9.5") found components: Interpreter 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/showanasyabi/Desktop/gadget/tests/cmake-build-release

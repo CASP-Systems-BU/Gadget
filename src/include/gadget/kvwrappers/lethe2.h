@@ -1,0 +1,186 @@
+//
+// Created by Showan Asyabi on 1/22/21.
+//
+
+#ifndef GADGET_LetheWrapper_H
+#define GADGET_LetheWrapper_H
+#include <memory>
+#include <string>
+#include <vector>
+
+#include "rocksdb/db.h"
+#include "rocksdb/slice.h"
+#include "rocksdb/options.h"
+#include "rocksdb/cache.h"
+#include "rocksdb/table.h"
+#include  "rocksdb/merge_operator.h"
+
+
+
+
+
+#include "include/gadget/performanceMetrics.h"
+#include "include/gadget/kvwrappers/kvwrapper.h"
+typedef std::chrono::high_resolution_clock::time_point TimeVar;
+
+// this class is from rocksDB github. They use this class  for merge
+class MyMerge : public ROCKSDB_NAMESPACE::MergeOperator {
+public:
+    virtual bool FullMergeV2(const MergeOperationInput& merge_in,
+                             MergeOperationOutput* merge_out) const override {
+        merge_out->new_value.clear();
+        if (merge_in.existing_value != nullptr) {
+            merge_out->new_value.assign(merge_in.existing_value->data(),
+                                        merge_in.existing_value->size());
+        }
+        for (const ROCKSDB_NAMESPACE::Slice& m : merge_in.operand_list) {
+            //fprintf(stderr, "Merge(%s)\n", m.ToString().c_str());
+            // the compaction filter filters out bad values
+            //assert(m.ToString() != "bad");
+            merge_out->new_value.assign(m.data(), m.size());
+        }
+        return true;
+    }
+
+    const char* Name() const override { return "MyMerge"; }
+};
+
+
+class LetheWrapper: public KVWrapper {
+public:
+    explicit LetheWrapper(std::string filePath) {
+        kDBPath = filePath;
+        responseTime = 0;
+    }
+
+    bool connect() override {
+        //options.IncreaseParallelism();
+        //options.OptimizeLevelStyleCompaction();
+        // create the DB if it's not already present
+        // Yuanli's config
+
+        options.create_if_missing = true;       // create the DB if it's not already present
+        options.merge_operator.reset(new MyMerge);
+        //options.merge_operator =  new  rocksdb::MergeOperators::CreatePutOperator();
+        options.stats_dump_period_sec = 50;
+
+        //add LRU cache. see https://github.com/facebook/rocksdb/wiki/Block-Cache
+        std::shared_ptr<rocksdb::Cache> cache = rocksdb::NewLRUCache(64*1024*1024);    //64MB
+        rocksdb::BlockBasedTableOptions table_options;
+        table_options.block_cache = cache;
+        //table_options.block_size = 128 * 1024;    //128KB
+        options.table_factory.reset(NewBlockBasedTableFactory(table_options));
+
+        options.write_buffer_size = 128*1024*1024;   //256MB mem-table size in total, see rocksdb/options.h L200
+        options.max_write_buffer_number = 2;          //default value is 2
+
+        //disable WAL:  https://github.com/facebook/rocksdb/wiki/Write-Ahead-Log#writeoptionsdisablewal
+        writeOpt = rocksdb::WriteOptions();
+        writeOpt.disableWAL = true;
+
+
+        // end of  Yuanli's config
+        //options.create_if_missing = true;
+        rocksdb::Status s;
+        s = rocksdb::DB::Open(options, kDBPath, &db);
+        if(! s.ok()) {
+            std::cout << "Lethe  Error: " << s.ToString() << std::endl;
+        } else {
+            std::cout << "Connected  to Lethe successfully " << s.ToString() << std::endl;
+        }
+        return s.ok();
+    }
+
+    bool disconnect() override {
+        rocksdb::Status s;
+        s = db->Close();
+        delete db;
+        rocksdb::DestroyDB(kDBPath, options);
+        std::cout << "Lethe is closed and destroyed!!? " << s.ok() << std::endl;
+        return s.ok();
+    }
+    void runBatchLatency()  override{
+        uint64_t counter = 0;
+        responseTimes.resize(operationsList.size());
+        while (counter < valuesList.size()) {
+            switch (operationsList[counter]) {
+                case Operation::putOpr:
+                    startTime = std::chrono::high_resolution_clock::now();
+                    db->Put(rocksdb::WriteOptions(), rocksdb::Slice(keysList[counter].data(), keysList[counter].size()), rocksdb::Slice(valuesList[counter].data(), valuesList[counter].size()));
+                    finishTime = std::chrono::high_resolution_clock::now();
+                    break;
+                case Operation::getOpr:
+                    startTime = std::chrono::high_resolution_clock::now();
+                    db->Get(rocksdb::ReadOptions(), rocksdb::Slice(keysList[counter].data(), keysList[counter].size()) , &response);
+                    finishTime = std::chrono::high_resolution_clock::now();
+                    break;
+                case Operation::mergeOpr:
+                    startTime = std::chrono::high_resolution_clock::now();
+                    db->Merge(rocksdb::WriteOptions(), rocksdb::Slice(keysList[counter].data(), keysList[counter].size()), rocksdb::Slice(valuesList[counter].data(), valuesList[counter].size()));
+                    finishTime = std::chrono::high_resolution_clock::now();
+                    break;
+                case Operation::deleteOpr:
+                    startTime = std::chrono::high_resolution_clock::now();
+                    db->Delete(rocksdb::WriteOptions(), rocksdb::Slice(keysList[counter].data(), keysList[counter].size()));
+                    finishTime = std::chrono::high_resolution_clock::now();
+                    break;
+            }
+            auto commandExecutionTime = std::chrono::duration_cast<std::chrono::microseconds>( finishTime - startTime ).count();
+            responseTimes[counter] = commandExecutionTime;
+            counter ++;
+        }
+    }
+
+    double runBatchThroughput() override{
+        assert(valuesList.size() > 0);
+        assert(valuesList.size() == keysList.size());
+        assert(valuesList.size() == operationsList.size());
+        uint64_t counter = 0;
+        startTime = std::chrono::high_resolution_clock::now();
+        while (counter < valuesList.size()) {
+
+            switch (operationsList[counter]) {
+                case Operation::putOpr: {
+                    db->Put(rocksdb::WriteOptions(),
+                            rocksdb::Slice(keysList[counter].data(), keysList[counter].size()),
+                            rocksdb::Slice(valuesList[counter].data(), valuesList[counter].size()));
+                    break;
+                }
+
+                case Operation::getOpr: {
+
+                    db->Get(rocksdb::ReadOptions(), rocksdb::Slice(keysList[counter].data(), keysList[counter].size()),
+                            &response);
+                    break;
+                }
+                case Operation::mergeOpr: {
+
+                    auto s = db->Merge(rocksdb::WriteOptions(), rocksdb::Slice(keysList[counter].data(), keysList[counter].size()), rocksdb::Slice(valuesList[counter].data(), valuesList[counter].size()));
+                    //std::cout << s.ok() << std::endl;
+                    break;
+                }
+                case Operation::deleteOpr: {
+
+                    db->Delete(rocksdb::WriteOptions(),
+                               rocksdb::Slice(keysList[counter].data(), keysList[counter].size()));
+                    break;
+                }
+            }
+            counter ++;
+        }
+        finishTime = std::chrono::high_resolution_clock::now();
+        auto ExperimentExecutionTime = std::chrono::duration_cast<std::chrono::microseconds>( finishTime - startTime ).count();
+        return (double)operationsList.size()/ (double)ExperimentExecutionTime; // Throughput
+    }
+
+
+    void  dumpOperationsOnFile() {}
+private:
+    std::string kDBPath;
+    rocksdb::DB* db;
+    rocksdb::Options options;
+    rocksdb::WriteOptions writeOpt;
+    TimeVar startTime, finishTime;
+    std::string response;
+};
+#endif //GADGET_LetheWrapper_H
