@@ -68,6 +68,7 @@ add_executable(gadget core/main.cpp
         include/gadget/operator/operators/tumblingKeyedIncremental.h
         include/gadget/operator/operators/tumblingKeyedHolistic.h
         include/gadget/operator/operators/continuousJoin.h
+        #include/gadget/operator/operators/sessionHolistic.h
         operators/flinkTrace.cpp
         include/gadget/distributions/serviceTime.h
         include/gadget/distributions/distributionParamters.h
@@ -86,12 +87,14 @@ add_executable(gadget core/main.cpp
         operators/joinSliding.cpp
         operators/continuousAggregation.cpp
         operators/intervalJoin.cpp
+        #operators/sessionHolistic.cpp
         include/gadget/kvwrappers/fileWrapper.h
         core/tests.h
         include/gadget/event/eventGeneratorParameters.h
         include/gadget/statemachine/stateMachines.h
         include/gadget/operator/oneStreamContinuousOperator.h
         include/gadget/operator/oneStreamWindowOperator.h
+        include/gadget/operator/oneStreamSessionWindowOperator.h
         include/gadget/operator/twoStreamContinuousOperator.h
         include/gadget/operator/twoStreamWindowOperator.h
         include/gadget/event/gadgetEventGenerator.h
@@ -110,7 +113,8 @@ add_executable(gadget core/main.cpp
 # make gadget  source a library to use it in google tests
 add_library(${BINARY}_lib STATIC ${SOURCES})
 message(${BINARY})
-
+# if you have installed rocksDB on your system, uncomment the following block
+#[[
 if(WIN32)
     target_link_libraries(gadget RocksDB::rocksdb)
 else()
@@ -125,6 +129,8 @@ else()
     #target_link_libraries(gadget snappy)
     #target_link_libraries(gadget /usr/lib/x86_64-linux-gnu/liblz4.a)
 endif()
+]]
+################### end of rocksDB part
 
 ###### for experiments use the following cmake
 #[[

@@ -9,7 +9,7 @@
 class  StateMachines {
 public:
     enum StatesType {
-        GetState = 0, PutState, MergeState, FinalGetState, FinalDeleteState, ScanState, NextState
+        GetState = 0, PutState, MergeState, FinalGetState, FinalDeleteState, ScanState, NextState, GetMetaState, MergeMetaState, DeleteMetaState
     };
 
     enum StateMachineType {
@@ -21,13 +21,30 @@ public:
     virtual   void reset(std::shared_ptr<Event> currentEvent, bool leftStream = true, uint64_t waterMark = 1) = 0;
 
 
+    friend  bool operator < (StateMachines const & lhs, StateMachines const & rhs) {
+        return lhs.startTime_ < rhs.startTime_;
+    }
+
+
+    bool operator == (const StateMachines& s) const { return startTime_ == s.startTime_ && finishTime_ == s.finishTime_; }
+    bool operator != (const StateMachines& s) const { return !operator==(s); }
+
+
 
     uint64_t getStartTime() {
         return  startTime_;
     }
 
+    void setStartTime(uint64_t startTime) {
+        startTime_ = startTime;
+    }
+
     uint64_t getFinishTime() {
         return  finishTime_;
+    }
+
+    void setFinishTime(uint64_t finishTime) {
+        finishTime_ =  finishTime;
     }
 
     std::string getUserKey() {

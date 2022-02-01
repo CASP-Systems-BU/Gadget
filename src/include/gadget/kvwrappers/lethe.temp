@@ -2,11 +2,8 @@
 // Created by Showan Asyabi on 6/6/21.
 //
 
-#ifndef GADGET_ROCKSDBWRAPPER_H
-#define GADGET_ROCKSDBWRAPPER_H
-//
-// Created by Showan Asyabi on 4/3/21.
-//
+#ifndef GADGET_LETHE_H
+#define GADGET_LETHE_H
 
 #include <memory>
 #include <string>
@@ -19,9 +16,9 @@
 typedef std::chrono::high_resolution_clock::time_point TimeVar;
 
 
-class RocksDBWrapper: public KVWrapper {
+class LetheWrapper: public KVWrapper {
 public:
-    explicit RocksDBWrapper(const std::string& connectionString) {
+    explicit LetheWrapper(const std::string& connectionString) {
     }
 
     bool connect() override {

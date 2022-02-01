@@ -1,38 +1,21 @@
 ################################################################ build the first event generator 
+# Here we build our own event generator (not reading for event files)
 #options: (tracefile, gadget)
-first.event.generator.type = tracefile
-first.event.generator.key.index = 0
-first.event.generator.event.time.index = 2
-first.event.generator.event.type.index = 4
-first.event.generator.file.path = tasks-input.txt 
-first.event.generator.watermark.frequency = 1
-################################################### build the second event generator (if needed for example for joins)
-second.event.generator.type = tracefile
-second.event.generator.key.index = 0
-second.event.generator.event.time.index = 1
-second.event.generator.event.type.index = 2
-second.event.generator.file.path = jobs.txt
-second.event.generator.watermark.frequency = 1
-###################################################
-####################################################### 
-#if you wish to build your own event generator (not reading for event files)- you replace the event generators, with the following example
-
-#first.event.generator.type = gadget
+first.event.generator.type = gadget
 
 #=== key popularity distribution for the first event generator =======
 #options(constant, hotspot, zipf, sequential, uniform)
-#first.event.generator.key.popularity.distrib.type = zipf
-#first.event.generator.key.popularity.distrib.params.s = 1
-#first.event.generator.key.popularity.distrib.params.keyspacesize= 1000000
-first.event.generator.key.popularity.distrib.params.s
+first.event.generator.key.popularity.distrib.type = zipf
+first.event.generator.key.popularity.distrib.params.s = 1
+first.event.generator.key.popularity.distrib.params.keyspacesize= 1000000
 
 #==== event time distribution for the first event generator
 #options(exponential, normal, constant, uniform)
-#first.event.generator.event.occurrence.gap.distrib.type = exponential
-#first.event.generator.event.occurrence.gap.distrib.params.lambda= 10
-#first.event.generator.watermark.frequency = 1
-#first.event.generator.outoforder.percentage = 2
-#first.event.generator.lateness.threshold = 3;
+first.event.generator.event.occurrence.gap.distrib.type = exponential
+first.event.generator.event.occurrence.gap.distrib.params.lambda= 10
+first.event.generator.watermark.frequency = 1
+first.event.generator.outoforder.percentage = 2
+first.event.generator.lateness.threshold = 3;
 
 
 
@@ -42,9 +25,8 @@ first.event.generator.key.popularity.distrib.params.s
 #tumbling.keyed.holistic, sliding.all.incremental, sliding.all.holistic, sliding.keyed.incremental,
 #sliding.keyed.holistic, join.tumbling,  join.sliding, join.interval, continuous.join,  flink.replayer, ycsb.replayer)
 operator.type= tumbling.keyed.incremental
-expected.num.operations = 1000000
+expected.num.operations = 100000
 window.length = 5
-trace.file.path = -
 #sliding.length = 1
 #upper.bound = 180
 #lower.bound = -120
@@ -65,16 +47,9 @@ operator.value.size.distrib.type = constant
 operator.value.size.distrib.params.constant = 10
 
 ################################################################### build the wrapper ( where the generated operations go- file or a DB)
-# options( file - rocksdb- lethe- berkeley - faster)- If file is chosen  Gadget dumps the generated operations on the file
-wrapper.type = rocksdb
-wrapper.path = /Users/showanasyabi/Desktop/experGadget
-
-
-##======================== arrival time distribution for the first event generator
-#first.event.generator.arrival.interarrival.distrib.type = exponential
-#first.event.generator.arrival.interarrival.distrib.params.lambda=10
-
-
+# options( file - rocksdb- lethe- berkeley - faster)- If file is chosen  Gadget dumps the generated operations on the file (wrapper.path/gadget.log)
+wrapper.type = file
+wrapper.path = .
 
 
 

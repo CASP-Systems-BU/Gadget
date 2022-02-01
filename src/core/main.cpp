@@ -583,7 +583,7 @@ std::cout << "Hello from Gadget!" << std::endl;
     if(argc > 1) {
          drive_machine(argv[1]);
     } else {
-        drive_machine("test.txt");
+        drive_machine("config.txt");
     }
 #if 0
  // perform the tests

@@ -25,10 +25,10 @@ public:
     }
 
     bool connect() override {
-        if(std::filesystem::exists(filePath_+"/gadget.log")) {
+        if(std::filesystem::exists(filePath_)) {
             gadgetFile_.open( filePath_+"/gadget.log" );
         } else {
-            std::cout << "Please make the following file: " <<  filePath_<<"/gadget.log"  << std::endl;
+            std::cout << "Please make the following file path: " <<  filePath_  << std::endl;
             return false;
         }
 
@@ -57,22 +57,22 @@ public:
             counter ++;
             switch (operationsList[counter]) {
                 case Operation::putOpr:
-                    gadgetFile_<<currentTime_ <<" put " <<keysList[counter]<< " userkey gadget gadgetFile" << std::endl;
+                    gadgetFile_<<currentTime_ <<" put " <<keysList[counter]<< " " << valuesList[counter] <<" gadget gadgetFile" << std::endl;
                     break;
                 case Operation::getOpr:
-                    gadgetFile_<< currentTime_<<" get " <<keysList[counter]<< " userkey gadget gadgetFile" << std::endl;
+                    gadgetFile_<< currentTime_<<" get " <<keysList[counter]<< " " << valuesList[counter] <<" gadget gadgetFile" << std::endl;
                     break;
                 case Operation::mergeOpr:
-                    gadgetFile_<<currentTime_ <<" merge " <<keysList[counter]<< " userkey gadget gadgetFile" << std::endl;
+                    gadgetFile_<<currentTime_ <<" merge " <<keysList[counter]<< " " << valuesList[counter] <<" gadget gadgetFile" << std::endl;
                     break;
                 case Operation::deleteOpr:
-                    gadgetFile_<< currentTime_<<" delete " <<keysList[counter]<< " userkey gadget gadgetFile" << std::endl;
+                    gadgetFile_<< currentTime_<<" delete " <<keysList[counter]<< " " << valuesList[counter] <<" gadget gadgetFile" << std::endl;
                     break;
                 case Operation::scanOpr:
-                    gadgetFile_<< currentTime_<<" seek " <<keysList[counter]<< " userkey gadget gadgetFile" << std::endl;
+                    gadgetFile_<< currentTime_<<" seek " <<keysList[counter]<< " " << valuesList[counter] <<" gadget gadgetFile" << std::endl;
                     break;
                 case Operation::nextOpr:
-                    gadgetFile_<< currentTime_<<" next " <<keysList[counter]<< " userkey gadget gadgetFile" << std::endl;
+                    gadgetFile_<< currentTime_<<" next " <<keysList[counter]<< " " << valuesList[counter] <<" gadget gadgetFile" << std::endl;
                     break;
             }
         }

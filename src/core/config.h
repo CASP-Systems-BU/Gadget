@@ -530,7 +530,7 @@ public:
                 // we first make the needed distributions
                 eventGeneratorParams->keyPopularity =  firstEventGeneratorKeyPopularityDistrib().value();
                 eventGeneratorParams->eventOccurrenceTimeDistribution =   firstEventGeneratorEventOccurrenceDistrib().value();
-                eventGeneratorParams->arrivalTimesDistribution =  firstEventGeneratorEventArrivalDistrib().value();
+                //eventGeneratorParams->arrivalTimesDistribution =  firstEventGeneratorEventArrivalDistrib().value();
 
 
                 eventGeneratorParams->outOfOrderPercentage = 0;
@@ -1067,7 +1067,7 @@ public:
 
                 eventGeneratorParams->keyPopularity =  secondEventGeneratorKeyPopularityDistrib().value();
                 eventGeneratorParams->eventOccurrenceTimeDistribution =   secondEventGeneratorEventOccurrenceDistrib().value();
-                eventGeneratorParams->arrivalTimesDistribution =  secondEventGeneratorEventArrivalDistrib().value();
+                //eventGeneratorParams->arrivalTimesDistribution =  secondEventGeneratorEventArrivalDistrib().value();
 
                 auto eventGen  =  EventGeneratorBuilder::BuildEventGenerator(EventGenerator::Gadget, eventGeneratorParams);
                 return eventGen;

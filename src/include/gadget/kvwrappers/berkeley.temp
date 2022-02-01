@@ -1,12 +1,10 @@
 //
-// Created by Showan Asyabi on 6/6/21.
-//
-
-#ifndef GADGET_ROCKSDBWRAPPER_H
-#define GADGET_ROCKSDBWRAPPER_H
-//
 // Created by Showan Asyabi on 4/3/21.
 //
+// copy the content of the berecklyDB.temp to this file when you do experiments
+
+#ifndef GADGET_BerecklyDBWRAPPER_H
+#define GADGET_BerecklyDBWRAPPER_H
 
 #include <memory>
 #include <string>
@@ -19,13 +17,13 @@
 typedef std::chrono::high_resolution_clock::time_point TimeVar;
 
 
-class RocksDBWrapper: public KVWrapper {
+class BerkeleyDBWrapper: public KVWrapper {
 public:
-    explicit RocksDBWrapper(const std::string& connectionString) {
+    explicit BerkeleyDBWrapper(const std::string& connectionString) {
     }
 
     bool connect() override {
-        return true;
+       return true;
     }
 
     bool disconnect() override {
@@ -39,7 +37,8 @@ public:
         // not defined
         return 0; }
 
+
 };
 
 
-#endif
+#endif //GADGET_BerecklyDBWRAPPER_H

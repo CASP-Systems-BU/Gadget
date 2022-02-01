@@ -48,8 +48,13 @@ public:
     
 
     /**
-     * This function is a main gadget driver that  does follows when it is called:
-     * 1)
+     * This function is a main gadget driver.
+     * 1) it gets the next batch of events from the event generator
+     * 2) update the watermark
+     * 3) make the needed windows
+     * 4) generate state store operations
+     * 5) conclude expired windows
+     *
      * @param operationList
      * @return
      */
