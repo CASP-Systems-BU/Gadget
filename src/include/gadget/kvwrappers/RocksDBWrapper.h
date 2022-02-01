@@ -13,6 +13,7 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <chrono>
 
 #include "include/gadget/performanceMetrics.h"
 #include "include/gadget/kvwrappers/kvwrapper.h"

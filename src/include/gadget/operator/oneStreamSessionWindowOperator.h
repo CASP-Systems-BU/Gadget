@@ -13,6 +13,7 @@
 #include <iostream>
 #include <map>
 #include <unordered_map>
+#include <cassert>
 
 #include "include/gadget/distributions/arrival.h"
 #include "include/gadget/distributions/key.h"

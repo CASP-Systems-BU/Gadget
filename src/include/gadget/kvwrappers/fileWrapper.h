@@ -11,6 +11,7 @@
 #include <fstream>
 #include <iostream>
 #include  <filesystem>
+#include <cassert>
 
 #include "include/gadget/performanceMetrics.h"
 #include "include/gadget/kvwrappers/kvwrapper.h"
