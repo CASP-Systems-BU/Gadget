@@ -132,7 +132,7 @@ The results will be located in folder `thirdExpr`. The generated figures should 
 
 - run experiments
 ```
-./runfig12.sh
+python3 runfig12.py
 ```
 
 - The figures will be generated here, with filename `fig12_plot_*`
