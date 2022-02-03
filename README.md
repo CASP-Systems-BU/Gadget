@@ -126,20 +126,19 @@ The results will be located in folder `thirdExpr`. The generated figures should 
 
 - run the container as described before
 
-- go to `cd /home/replayer/`
+- go to replayer folder `cd /home/replayer/`
 
-- run the experiment script `./runmyeval.sh no`. Repeat it for 3 times so it will generate 3 results.
+- remove previous generated ycsb trace if any. `rm workload/mywl_*`
 
-- see the name of the result files. `ls /home/replayer/` . Remember these names (eg: `result_no_1633719187.txt` , `result_no_1633719795.txt` , `result_no_1633720380.txt` )
-
-- run the script to generate figure. 
-
+- run experiments
 ```
-python3 plot2.py result_no_1633719187.txt result_no_1633719795.txt result_no_1633720380.txt ops
-python3 plot2.py result_no_1633719187.txt result_no_1633719795.txt result_no_1633720380.txt p99
+./compile.sh
+./runfig12.sh
 ```
 
-- see the results `result_plot__*` in `/home/replayer/`. 
+- The figures will be generated here, with filename `fig12_plot_*`
+
+
 
 #### [Results]
 
