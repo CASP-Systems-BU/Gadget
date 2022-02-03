@@ -1,0 +1,16 @@
+insertproportion=0
+fieldcount=1
+fieldlength=2048
+readproportion=0.52
+scanproportion=0
+readallfields=true
+dotransactions=false
+status=true
+readmodifywriteproportion=0
+requestdistribution=latest
+recordcount=1518768
+minfieldlength=2048
+updateproportion=0.44
+operationcount=27247320
+
+workload=site.ycsb.workloads.CoreWorkload
