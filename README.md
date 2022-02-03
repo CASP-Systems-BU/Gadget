@@ -132,7 +132,6 @@ The results will be located in folder `thirdExpr`. The generated figures should 
 
 - run experiments
 ```
-./compile.sh
 ./runfig12.sh
 ```
 
