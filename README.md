@@ -67,7 +67,7 @@ This example reads Borg task traces and generates the state access workload for 
     
 - (C3): Finally, in section 6.3, we evaluate the performance of KV stores for all operators using Gadget. Figure 13 plots throughput and tail latency for all kv stores. We see that RocksDB is significantly outperformed in six out of eleven workloads by both FASTER and BerkeleyDB. 
 
-- (C4): In Section 6.3, we also evaluate the performance of KV stores using YCSB. Figure 12 plots throughput and tail latency for all KV stores.
+- (C4): In Section 6.3, we also evaluate the performance of existing KV stores using YCSB. Figure 12 plots throughput and tail latency for all KV stores.
 
 ## Experiments
 
@@ -141,4 +141,4 @@ python3 runfig12.py
 
 #### [Results]
 
-The generated figures should be similar to those shown in Figure 12
+The generated figures should be similar to those shown in Figure 12, but note that different hardware may lead to different results.
