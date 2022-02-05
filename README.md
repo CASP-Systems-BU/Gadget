@@ -141,4 +141,4 @@ python3 runfig12.py
 
 #### [Results]
 
-The generated figures should be similar to those shown in Figure 12, but note that different hardware may lead to different results.
+The generated figures should be similar to those shown in Figure 12, but note that different hardware may lead to different result in some cases.
