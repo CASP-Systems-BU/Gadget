@@ -70,7 +70,7 @@ public:
             * Here a arrivalTime_ of  a new event is relative. It indicates for how
             * long the streaming system should wait until this event arrives
             */
-            newEvent->arrivalTime_ = arrivalTimeDistribution_->Next();
+            //newEvent->arrivalTime_ = arrivalTimeDistribution_->Next();
             newEvent->eventTime_ = eventOccurrenceTime_;
 
             // check if this event is chosen to be out order
@@ -128,7 +128,7 @@ public:
              * Here a arrivalTime_ of  a new event is relative. It indicates for how
              * long the system should wait until this event arrives
              */
-            newEvent->arrivalTime_ = arrivalTimeDistribution_->Next();
+            //newEvent->arrivalTime_ = arrivalTimeDistribution_->Next();
             newEvent->eventTime_ = eventOccurrenceTime_;
             if (eventOccurrenceTime_ >= gadgetTimeUnit_) {
                 // fixme maybe its better if we have an approach like pervious  function- it is possible that a  time unit does not have any event
@@ -261,7 +261,7 @@ public:
                  * Here a arrivalTime_ of  a new event is relative. It indicates for how
                  * long the system should wait until this event arrives
                  */
-                newEvent->arrivalTime_ = arrivalTimeDistribution_->Next();
+                //newEvent->arrivalTime_ = arrivalTimeDistribution_->Next();
                 newEvent->eventTime_ = eventOccurrenceTime_;
                 if (eventOccurrenceTime_ >= gadgetTimeUnit_) {
                     // fixme maybe its better if we have an approach like pervious  function- it is possible that a  time unit does not have any event
