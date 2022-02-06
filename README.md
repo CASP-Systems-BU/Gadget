@@ -56,7 +56,7 @@ If you wish to compile Gadget, try it out on your system. You can follow the fol
 To run gadget, you can use one of our config files provided in `configs` folder and run Gadget by `./gadget config.txt`
  
  
-This example reads Borg task traces and generates the state access workload for a tumbling window operator. The results go to a file named `gadget.log`. Note that to evaluate a KV store using Gadget, the KV store must be installed on the system.
+This example generates the state access workload for a tumbling window operator. The results go to a file named `gadget.log`. Note that to evaluate a KV store using Gadget, the KV store must be installed on the system.
 
 
 # Major Claims
