@@ -117,10 +117,6 @@ add_executable(gadget core/main.cpp
 add_library(${BINARY}_lib STATIC ${SOURCES})
 message(${BINARY})
 
-# make gadget  source a library to use it in google tests
-add_library(${BINARY}_lib STATIC ${SOURCES})
-message(${BINARY})
-
 # turn on the followings for ubuntu
 target_link_libraries(gadget pthread)
 target_link_libraries(gadget dl)
