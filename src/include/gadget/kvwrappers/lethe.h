@@ -13,7 +13,6 @@
 
 #include "include/gadget/performanceMetrics.h"
 #include "include/gadget/kvwrappers/kvwrapper.h"
-typedef std::chrono::high_resolution_clock::time_point TimeVar;
 
 
 class LetheWrapper: public KVWrapper {
