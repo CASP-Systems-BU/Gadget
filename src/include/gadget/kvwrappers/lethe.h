@@ -4,12 +4,6 @@
 
 #ifndef GADGET_LETHE_H
 #define GADGET_LETHE_H
-//
-// Created by Showan Asyabi on 4/3/21.
-//
-
-#ifndef GADGET_LetheWRAPPER_H
-#define GADGET_LetheWRAPPER_H
 
 #include <memory>
 #include <string>
@@ -45,7 +39,4 @@ public:
 };
 
 
-#endif //GADGET_LetheWRAPPER_H
-
-
-#endif //GADGET_LETHE_H
+#endif

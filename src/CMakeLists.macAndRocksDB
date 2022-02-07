@@ -68,7 +68,8 @@ add_executable(gadget core/main.cpp
         include/gadget/operator/operators/tumblingKeyedIncremental.h
         include/gadget/operator/operators/tumblingKeyedHolistic.h
         include/gadget/operator/operators/continuousJoin.h
-        #include/gadget/operator/operators/sessionHolistic.h
+        include/gadget/operator/operators/sessionHolistic.h
+        include/gadget/operator/operators/sessionIncremental.h
         operators/flinkTrace.cpp
         include/gadget/distributions/serviceTime.h
         include/gadget/distributions/distributionParamters.h
@@ -87,14 +88,14 @@ add_executable(gadget core/main.cpp
         operators/joinSliding.cpp
         operators/continuousAggregation.cpp
         operators/intervalJoin.cpp
-        #operators/sessionHolistic.cpp
+        operators/sessionHolistic.cpp
+        operators/sessionIncremental.cpp
         include/gadget/kvwrappers/fileWrapper.h
         core/tests.h
         include/gadget/event/eventGeneratorParameters.h
         include/gadget/statemachine/stateMachines.h
         include/gadget/operator/oneStreamContinuousOperator.h
         include/gadget/operator/oneStreamWindowOperator.h
-        include/gadget/operator/oneStreamSessionWindowOperator.h
         include/gadget/operator/twoStreamContinuousOperator.h
         include/gadget/operator/twoStreamWindowOperator.h
         include/gadget/event/gadgetEventGenerator.h

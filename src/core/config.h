@@ -1631,6 +1631,12 @@ std::optional<std::shared_ptr<Operator>> makeOperator ( ) {
         } else if (oprName == "tumbling.keyed.holistic") {
             operatorType_ = Operator::OperatorWindowTumblingKeyedHolistic;
             operatorIsWindow = true;
+        }  else if (oprName == "session.holistic") {
+            operatorType_ = Operator:: OperatorSessionHolistic;
+            operatorIsWindow = true; // we use window length for the session gap
+         } else if (oprName == "session.incremental") {
+            operatorType_ = Operator::OperatorSessionIncremental;
+            operatorIsWindow = true; // we use window length for session gap
         } else if (oprName == "ycsb.replayer") {
             std::cout << "yscb replayer" << std::endl;
             isReplayer = true;

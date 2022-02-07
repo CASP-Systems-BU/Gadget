@@ -161,7 +161,7 @@ int drive_machine(const std::string& pathToConfigFile) {
      */
     std::cout<< "******************** Results **********************" << std::endl;
     std::cout<< "Number of operations: " << numberProducedOperation << std::endl;
-    std::cout<< "Key space size: " <<  wrapper.value()->keysList.back() << std::endl;
+    //std::cout<< "Key space size: " <<  wrapper.value()->keysList.back() << std::endl;
 
 
     if(dumpOnFile) {

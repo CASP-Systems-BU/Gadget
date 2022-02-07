@@ -19,6 +19,13 @@ public:
         responseTime = 0;
     }
 
+    Operation(OperationType type, std::string oprKey, std::string oprValue) {
+        responseTime = 0;
+        oprType = type;
+        key = oprKey;
+        value = oprValue;
+    }
+
     bool operator< (const Operation &other) const {
         return responseTime < other.responseTime;
     }

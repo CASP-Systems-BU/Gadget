@@ -1,7 +1,7 @@
-#include "include/gadget/operator/operators/sessionHolistic.h"
+#include "include/gadget/operator/operators/sessionIncremental.h"
 
 // TODO (john): Merge this with Operation in operation.cpp
-StateOperation::StateOperation(Operation::OperationType opType,
+StateOperation2::StateOperation2(Operation::OperationType opType,
                                Timestamp  time,
                                KeyT key, ValueT value){
     type  = opType;
@@ -11,7 +11,7 @@ StateOperation::StateOperation(Operation::OperationType opType,
 }
 
 // Returns the state operation as a std::string
-std::string StateOperation::toString(bool omit_value_size) {
+std::string StateOperation2::toString(bool omit_value_size) {
     std::string s = std::string("");
     switch(type) {
         case Operation::getOpr:
@@ -39,13 +39,13 @@ std::string StateOperation::toString(bool omit_value_size) {
 }
 
 // TODO (john): Move this to 'WindowStateMachine'
-ExpirationIndex::ExpirationIndex(uint64_t lateness){
+ExpirationIndex2::ExpirationIndex2(uint64_t lateness){
     latenessLength = lateness;
 }
 
 // TODO (john): Move this to 'WindowStateMachine'
 // Inserts the given state machine into the expiration index
-void ExpirationIndex::insert(std::shared_ptr<SessionKeyedHolisticStateMachine> sm) {
+void ExpirationIndex2::insert(std::shared_ptr<SessionKeyedIncrementalStateMachine> sm) {
     // cout << "Inserting entry that expires at " << sm->getEndTime()+latenessLength << endl;
     // Index state machine according to the new end time
     expiredStateMachines[sm->getEndTime()+latenessLength].push_back(sm);
@@ -53,7 +53,7 @@ void ExpirationIndex::insert(std::shared_ptr<SessionKeyedHolisticStateMachine> s
 
 // TODO (john): Move this to 'WindowStateMachine'
 // Removes the given machine from the expiration index
-void ExpirationIndex::remove(std::shared_ptr<SessionKeyedHolisticStateMachine> sm) {
+void ExpirationIndex2::remove(std::shared_ptr<SessionKeyedIncrementalStateMachine> sm) {
     auto entry = expiredStateMachines.find(sm->getEndTime()+latenessLength);
     assert(entry!=expiredStateMachines.end());
     auto sms = entry->second;  // A list of state machines that expire at the same time
@@ -70,8 +70,8 @@ void ExpirationIndex::remove(std::shared_ptr<SessionKeyedHolisticStateMachine> s
 
 // TODO (john): Move this to 'WindowStateMachine'
 // Collects the expired state machines at the given watermark and removes them from the index
-void ExpirationIndex::collect(Timestamp watermark,
-                              std::list<std::shared_ptr<SessionKeyedHolisticStateMachine>> &stateMachinesToClose) {
+void ExpirationIndex2::collect(Timestamp watermark,
+                              std::list<std::shared_ptr<SessionKeyedIncrementalStateMachine>> &stateMachinesToClose) {
     auto limit = expiredStateMachines.lower_bound(watermark);
     auto iter=expiredStateMachines.begin();
     while (iter!=limit) {
@@ -87,11 +87,11 @@ void ExpirationIndex::collect(Timestamp watermark,
 
 // TODO (john): Move this to 'WindowStateMachine'
 // Returns the number of state machines that expire at the given time
-uint64_t ExpirationIndex::num(Timestamp time) {
+uint64_t ExpirationIndex2::num(Timestamp time) {
     return expiredStateMachines[time+latenessLength].size();
 }
 
-SessionKeyedHolisticStateMachine::SessionKeyedHolisticStateMachine(std::string currentKey ,
+SessionKeyedIncrementalStateMachine::SessionKeyedIncrementalStateMachine(std::string currentKey ,
                                                                    std::shared_ptr<ServiceTime>  serviceTimeDistribution,
                                                                    uint64_t startTime,
                                                                    uint64_t finishTime,
@@ -113,7 +113,7 @@ SessionKeyedHolisticStateMachine::SessionKeyedHolisticStateMachine(std::string c
 }
 
 // Resets the state machine for the current event
-void SessionKeyedHolisticStateMachine::reset(std::shared_ptr<Event> currentEvent) {
+void SessionKeyedIncrementalStateMachine::reset(std::shared_ptr<Event> currentEvent) {
     this->currentEvent = currentEvent;
     state = GetMetadataState;  // The next operation must fetch the metadata for the current event key
     metaKey = std::string("metadata_") + currentEvent->key_;  // The metadata key in the state store
@@ -122,67 +122,77 @@ void SessionKeyedHolisticStateMachine::reset(std::shared_ptr<Event> currentEvent
 }
 
 // Sets state machine as closed (i.e., the window has expired)
-void SessionKeyedHolisticStateMachine::close() {
+void SessionKeyedIncrementalStateMachine::close() {
     isDone = false;  // There are pending operations to fetch and delete window contents and metadata
     state = FinalGetState; // Next operation must fetch the expired window contents
 }
 
 // Sets the state of the state machine
-void SessionKeyedHolisticStateMachine::setState(StatesType newState) {
+void SessionKeyedIncrementalStateMachine::setState(StatesType newState) {
     state = newState;
 }
 
 // Returns the start time fo the window
-uint64_t SessionKeyedHolisticStateMachine::getStartTime() {
+uint64_t SessionKeyedIncrementalStateMachine::getStartTime() {
     return  startTime;
 }
 
 // Sets the start time of the window
-void SessionKeyedHolisticStateMachine::setStartTime(uint64_t newStart) {
+void SessionKeyedIncrementalStateMachine::setStartTime(uint64_t newStart) {
     startTime = newStart;
 }
 
 // Returns the end time fo the window
-uint64_t SessionKeyedHolisticStateMachine::getEndTime() {
+uint64_t SessionKeyedIncrementalStateMachine::getEndTime() {
     return  endTime;
 }
 
 // Sets the end time of the window
-void SessionKeyedHolisticStateMachine::setEndTime(uint64_t newEnd) {
+void SessionKeyedIncrementalStateMachine::setEndTime(uint64_t newEnd) {
     endTime = newEnd;
 }
 
 // Returns the current event key
-std::string SessionKeyedHolisticStateMachine::getCurrentEventKey() {
+std::string SessionKeyedIncrementalStateMachine::getCurrentEventKey() {
     return currentEvent->key_;
 }
 
 // Runs the state machine and generates the corresponding state access operations
-bool SessionKeyedHolisticStateMachine::run() {
+bool SessionKeyedIncrementalStateMachine::run() {
     if(isDone || !currentEvent) {
         return false;
     }
     assert((state==GetMetadataState) || (state==FinalGetState));
     // A pointer to the session window operator instance associated with the state machine
-    auto op = dynamic_pointer_cast<SessionKeyedHolistic>(opInstance);
+    auto op = dynamic_pointer_cast<SessionKeyedIncremental>(opInstance);
     assert(op);
     // TODO (john): Different state transitions should draw from different service time distributions
     if (state==GetMetadataState) {  // Step 1: Generate state operations triggered by the current event
         // Step 1.1: Generate operation that fetches the metadata for the current event key
         state = GetState;
         currentOpr = Operation::getOpr;
-        lastOperation = std::make_shared<StateOperation>(StateOperation(currentOpr, currentSleepPeriod, metaKey, ""));
+        lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, metaKey, ""));
         op->operations.push(lastOperation);
         currentSleepPeriod += serviceTimeDistribution->Next();
         numOfDoneOperation++;
-        // TODO (john): This should be get-put in state stores that do not support merge
+        // TODO (john): get-put in state stores
         // Step 1.2: Generate operation that merges current event to the assigned window in the state store
-        currentOpr = Operation::mergeOpr;
-        lastOperation = std::make_shared<StateOperation>(StateOperation(currentOpr, currentSleepPeriod, currentKey,
-                                                                   op->ValueDistribution_->Next()));
+        currentOpr = Operation::getOpr;
+        lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, currentKey,
+                                                                        op->ValueDistribution_->Next()));
         op->operations.push(lastOperation);
         currentSleepPeriod += serviceTimeDistribution->Next();
         numOfDoneOperation++;
+
+
+        currentOpr = Operation::putOpr;
+        lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, currentKey,
+                                                                        op->ValueDistribution_->Next()));
+        op->operations.push(lastOperation);
+        currentSleepPeriod += serviceTimeDistribution->Next();
+        numOfDoneOperation++;
+
+
         // Step 1.3: Generate operations corresponding to state merges
         if (op->mergeDone) {
             for (auto entry : op->mappingsToDelete) {
@@ -191,20 +201,20 @@ bool SessionKeyedHolisticStateMachine::run() {
                 // Step 1.3.1: Generate operation that fetches merged window contents
                 auto numElements = entry.second.second;
                 currentOpr = Operation::getOpr;
-                lastOperation = std::make_shared<StateOperation>(StateOperation(currentOpr, currentSleepPeriod, winId, ""));
+                lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, winId, ""));
                 op->operations.push(lastOperation);
                 currentSleepPeriod += serviceTimeDistribution->Next();
                 numOfDoneOperation++;
                 // Step 1.3.2: Generate operation that merges window contents with the contents of the new window
                 currentOpr = Operation::mergeOpr;
                 std::string v(numElements * op->ValueDistribution_->Next().size(), '0');  // A std::string of size equal to the size of the merged window contents
-                lastOperation = std::make_shared<StateOperation>(StateOperation(currentOpr, currentSleepPeriod, currentKey, v));
+                lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, currentKey, v));
                 op->operations.push(lastOperation);
                 currentSleepPeriod += serviceTimeDistribution->Next();
                 numOfDoneOperation++;
                 // Step 1.3.3: Generate operation that deletes the merged window
                 currentOpr = Operation::deleteOpr;
-                lastOperation = std::make_shared<StateOperation>(StateOperation(currentOpr, currentSleepPeriod, winId, ""));
+                lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, winId, ""));
                 op->operations.push(lastOperation);
                 currentSleepPeriod += serviceTimeDistribution->Next();
                 numOfDoneOperation++;
@@ -212,7 +222,7 @@ bool SessionKeyedHolisticStateMachine::run() {
             // Step 1.3.4: Generate operation that deletes the metadata for the current key
             if (op->deleteMetadata) {
                 currentOpr = Operation::deleteOpr;
-                lastOperation = std::make_shared<StateOperation>(StateOperation(currentOpr, currentSleepPeriod, metaKey, ""));
+                lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, metaKey, ""));
                 op->operations.push(lastOperation);
                 currentSleepPeriod += serviceTimeDistribution->Next();
                 numOfDoneOperation++;
@@ -227,8 +237,8 @@ bool SessionKeyedHolisticStateMachine::run() {
 
             for (auto entry : *entries) {
                 currentOpr = Operation::mergeOpr;
-                lastOperation = std::make_shared<StateOperation>(StateOperation(currentOpr, currentSleepPeriod, metaKey,
-                                                                           op->metadataEntry));
+                lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, metaKey,
+                                                                                op->metadataEntry));
                 op->operations.push(lastOperation);
                 currentSleepPeriod += serviceTimeDistribution->Next();
                 numOfDoneOperation++;
@@ -236,8 +246,8 @@ bool SessionKeyedHolisticStateMachine::run() {
         }
         else { // Step 1.4: No windows were merged. Generate operation that inserts the entry
             currentOpr = Operation::mergeOpr;
-            lastOperation = std::make_shared<StateOperation>(StateOperation(currentOpr, currentSleepPeriod, metaKey,
-                                                                       op->metadataEntry));
+            lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, metaKey,
+                                                                            op->metadataEntry));
             op->operations.push(lastOperation);
             currentSleepPeriod += serviceTimeDistribution->Next();
             numOfDoneOperation++;
@@ -246,19 +256,19 @@ bool SessionKeyedHolisticStateMachine::run() {
     else if (state==FinalGetState) {  // Step 2: Generate state operations triggered by window expiration
         // Step 2.1: Generate operation that fetched the contents of the expired window
         currentOpr = Operation::getOpr;
-        lastOperation = std::make_shared<StateOperation>(StateOperation(currentOpr, currentSleepPeriod, currentKey, ""));
+        lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, currentKey, ""));
         op->operations.push(lastOperation);
         currentSleepPeriod += serviceTimeDistribution->Next();
         numOfDoneOperation++;
         // Step 2.2: Generate operation that deletes the expired window
         currentOpr = Operation::deleteOpr;
-        lastOperation = std::make_shared<StateOperation>(StateOperation(currentOpr, currentSleepPeriod, currentKey, ""));
+        lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, currentKey, ""));
         op->operations.push(lastOperation);
         currentSleepPeriod += serviceTimeDistribution->Next();
         numOfDoneOperation++;
         // Step 2.3: Generate operation that deletes metadata for the current key
         currentOpr = Operation::deleteOpr;
-        lastOperation = std::make_shared<StateOperation>(StateOperation(currentOpr, currentSleepPeriod, metaKey, ""));
+        lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, metaKey, ""));
         op->operations.push(lastOperation);
         currentSleepPeriod += serviceTimeDistribution->Next();
         numOfDoneOperation++;
@@ -267,8 +277,8 @@ bool SessionKeyedHolisticStateMachine::run() {
         auto entries = &op->windowMappings[currentEvent->key_];
         for (auto entry : *entries) {
             currentOpr = Operation::mergeOpr;
-            lastOperation = std::make_shared<StateOperation>(StateOperation(currentOpr, currentSleepPeriod, metaKey,
-                                                                       op->metadataEntry));
+            lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, metaKey,
+                                                                            op->metadataEntry));
             op->operations.push(lastOperation);
             currentSleepPeriod += serviceTimeDistribution->Next();
             numOfDoneOperation++;
@@ -279,7 +289,7 @@ bool SessionKeyedHolisticStateMachine::run() {
 }
 
 // NOTE (john): Not used
-bool SessionKeyedHolisticStateMachine::HasNext() {
+bool SessionKeyedIncrementalStateMachine::HasNext() {
     std::cerr << "HasNext() not implemented for SessionKeyedHolisitcStateMachine!" << std::endl;
     return true;
 }
@@ -288,14 +298,14 @@ bool SessionKeyedHolisticStateMachine::HasNext() {
 
 
 // Returns the id of the state machine
-std::string SessionKeyedHolisticStateMachine::winId() {
+std::string SessionKeyedIncrementalStateMachine::winId() {
     return currentKey;
 }
 
 
 
-SessionKeyedHolistic::SessionKeyedHolistic(std::shared_ptr<OperatorParameters> params) {
-    expiredStateMachines = std::make_shared<ExpirationIndex>(params->latenessLength);
+SessionKeyedIncremental::SessionKeyedIncremental(std::shared_ptr<OperatorParameters> params) {
+    expiredStateMachines = std::make_shared<ExpirationIndex2>(params->latenessLength);
     KeyDistribution_ = params->keysDistribution;
     ValueDistribution_ = params->valuesDistribution;
     this->serviceTimeDistribution = params->serviceTimeDistribution;
@@ -313,79 +323,79 @@ SessionKeyedHolistic::SessionKeyedHolistic(std::shared_ptr<OperatorParameters> p
     metadataEntry = "dummy_metadata_entry";
 }
 
-bool SessionKeyedHolistic::runOperator(std::vector<std::shared_ptr<Operation>> &operationList) {
-   /* while (true) {
-        // Step 1: Check if there are state operations in the queue
-        if (!operations.empty()) {
-            lastStateOperation = operations.front();
-            // cout << lastStateOperation->toString() << endl;
-            operations.pop();
-            return true;
-        }
-        if (!pendingEvents()) {  // Input batch is exhausted
-            // Step 2: Trigger all expired windows (if any) and push the respective state operations to the queue
-            closeExpiredStateMachines();
-            // Step 3: Pull the next batch of events from the input
-            prevWatermark = lastWatermark;
-            lastWatermark = eventGenerator->generateNextPane();
-            // cout << "Last watermark: " << lastWatermark << endl;
-            if (lastWatermark == 0) return false;  // Input stream is exhausted
-            inputBuffer = eventGenerator->getPane(lastWatermark);
-            eventIndex = 0;  // Reset the index of the current event in the batch
-            // If there are no events in the next unit of event time try pulling the next batch
-            if (inputBuffer.size() == 0) continue;
-        }
-        // Step 4: Assign state machines to the next event in the batch
+bool SessionKeyedIncremental::runOperator(std::vector<std::shared_ptr<Operation>> &operationList) {
+    /* while (true) {
+         // Step 1: Check if there are state operations in the queue
+         if (!operations.empty()) {
+             lastStateOperation2 = operations.front();
+             // cout << lastStateOperation2->toString() << endl;
+             operations.pop();
+             return true;
+         }
+         if (!pendingEvents()) {  // Input batch is exhausted
+             // Step 2: Trigger all expired windows (if any) and push the respective state operations to the queue
+             closeExpiredStateMachines();
+             // Step 3: Pull the next batch of events from the input
+             prevWatermark = lastWatermark;
+             lastWatermark = eventGenerator->generateNextPane();
+             // cout << "Last watermark: " << lastWatermark << endl;
+             if (lastWatermark == 0) return false;  // Input stream is exhausted
+             inputBuffer = eventGenerator->getPane(lastWatermark);
+             eventIndex = 0;  // Reset the index of the current event in the batch
+             // If there are no events in the next unit of event time try pulling the next batch
+             if (inputBuffer.size() == 0) continue;
+         }
+         // Step 4: Assign state machines to the next event in the batch
+         assignStateMachines();
+         // Step 5: Generate all state operations triggered by the current event and push them to the queue
+         generateStateOperation2s();
+         // Clear operator state for next event
+         clearEventState();
+         eventIndex++;
+     } */
+    // get the next batch of events
+    inputBuffer.clear();
+    uint64_t  time = eventGenerator->getEventBatch(inputBuffer);
+    if(time == 0)  { // this indicates there no more event to process
+        return false;
+    }
+
+    // Step 2: Trigger all expired windows (if any) and push the respective state operations to the queue
+    closeExpiredStateMachines();
+    // Step 3: Pull the next batch of events from the input
+    prevWatermark = lastWatermark;
+    lastWatermark = eventGenerator->getWaterMark();
+    eventGenerator->forgetPanes(time);
+    // cout << "Last watermark: " << lastWatermark << endl;
+    //if (lastWatermark == 0) return false;  // Input stream is exhausted
+    //inputBuffer = eventGenerator->getPane(lastWatermark);
+    eventIndex = 0;  // Reset the index of the current event in the batch
+    //std::cout << "input buffer size " << inputBuffer.size() <<std::endl;
+
+    while (eventIndex <  inputBuffer.size()) {
+
         assignStateMachines();
         // Step 5: Generate all state operations triggered by the current event and push them to the queue
-        generateStateOperations();
+        generateStateOperation2s();
         // Clear operator state for next event
         clearEventState();
         eventIndex++;
-    } */
-         // get the next batch of events
-        inputBuffer.clear();
-        uint64_t  time = eventGenerator->getEventBatch(inputBuffer);
-        if(time == 0)  { // this indicates there no more event to process
-            return false;
-        }
-
-    // Step 2: Trigger all expired windows (if any) and push the respective state operations to the queue
-        closeExpiredStateMachines();
-        // Step 3: Pull the next batch of events from the input
-        prevWatermark = lastWatermark;
-        lastWatermark = eventGenerator->getWaterMark();
-        eventGenerator->forgetPanes(time);
-        // cout << "Last watermark: " << lastWatermark << endl;
-        //if (lastWatermark == 0) return false;  // Input stream is exhausted
-        //inputBuffer = eventGenerator->getPane(lastWatermark);
-        eventIndex = 0;  // Reset the index of the current event in the batch
-        //std::cout << "input buffer size " << inputBuffer.size() <<std::endl;
-
-        while (eventIndex <  inputBuffer.size()) {
-
-            assignStateMachines();
-            // Step 5: Generate all state operations triggered by the current event and push them to the queue
-            generateStateOperations();
-            // Clear operator state for next event
-            clearEventState();
-            eventIndex++;
     }
 
     // return the operation
 
     if (!operations.empty()) {
         while (!operations.empty()) {
-            lastStateOperation = operations.front();
+            lastStateOperation2 = operations.front();
 
-            //std::cout << lastStateOperation->toString() << std::endl;
-            auto opr = std::make_shared<Operation>(lastStateOperation->type, lastStateOperation->key,
-                                                   lastStateOperation->value);
+            //std::cout << lastStateOperation2->toString() << std::endl;
+            auto opr = std::make_shared<Operation>(lastStateOperation2->type, lastStateOperation2->key,
+                                                   lastStateOperation2->value);
             operationList.push_back(opr);
             operations.pop();
         }
     }
-   //std::cout << "operationList" << operationList.size() << std::endl;
+    //std::cout << "operationList" << operationList.size() << std::endl;
     return true;
 
 }
@@ -395,37 +405,37 @@ bool SessionKeyedHolistic::runOperator(std::vector<std::shared_ptr<Operation>> &
 
 
 // Returns the last state operation performed
-std::shared_ptr<StateOperation> SessionKeyedHolistic::nextOp() {
-    return lastStateOperation;
+std::shared_ptr<StateOperation2> SessionKeyedIncremental::nextOp() {
+    return lastStateOperation2;
 }
 
 // Returns true is there are more input events to process in the current batch, false otherwise
-bool SessionKeyedHolistic::pendingEvents() {
+bool SessionKeyedIncremental::pendingEvents() {
     return inputBuffer.size() > eventIndex;
 }
 
 // Clears state of the current input event
-void SessionKeyedHolistic::clearEventState() {
+void SessionKeyedIncremental::clearEventState() {
     assignedStateMachines.clear();
     mappingsToDelete.clear();
 }
 
 // Generates all state access operations
-void SessionKeyedHolistic::generateStateOperations() {
+void SessionKeyedIncremental::generateStateOperation2s() {
     for (auto sm : assignedStateMachines) {
         sm->run();
     }
 }
 
 // Returns true if there was a session window merging due to the last processed event, false otherwise
-bool SessionKeyedHolistic::mappingsMerged() {
+bool SessionKeyedIncremental::mappingsMerged() {
     return mergeDone;
 }
 
 // Closes all state machines that have expired and generates the respective state operations
-void SessionKeyedHolistic::closeExpiredStateMachines() {
+void SessionKeyedIncremental::closeExpiredStateMachines() {
     // Step 1: Fetch all expired state machines
-    std::list<std::shared_ptr<SessionKeyedHolisticStateMachine>> stateMachinesToClose;
+    std::list<std::shared_ptr<SessionKeyedIncrementalStateMachine>> stateMachinesToClose;
     expiredStateMachines->collect(lastWatermark, stateMachinesToClose);
     // cout << "Found " << stateMachinesToClose.size() << " state machines to close." << endl;
     // Step 2: Close state machines and generate the remaining state operations
@@ -464,13 +474,13 @@ void SessionKeyedHolistic::closeExpiredStateMachines() {
 }
 
 // Assigns a state machine to the next input event and updates operator state (incl. session window mappings)
-void SessionKeyedHolistic::assignStateMachines() {
+void SessionKeyedIncremental::assignStateMachines() {
     // Make sure all mappings have been updated properly after processing the last event
     assert(mappingsToDelete.size()==0);
     assert(assignedStateMachines.size()==0);
     // The current input event
     auto event = inputBuffer[eventIndex];
-     //std::cout << "Current event time " << event->eventTime_ << " and key " << event->key_ << " at watermark " << lastWatermark << std::endl;
+    //std::cout << "Current event time " << event->eventTime_ << " and key " << event->key_ << " at watermark " << lastWatermark << std::endl;
     // Ignore too late events
     if ( (event->eventTime_ + latenessLength) < prevWatermark ) return;
     // Step 1: Fetch active state machines for the current event key
@@ -514,7 +524,7 @@ void SessionKeyedHolistic::assignStateMachines() {
     }
     if (!merged) {
         // Step 2: Create a new state machine for the current event and update operator state
-        auto new_sm = std::make_shared<SessionKeyedHolisticStateMachine>(KeyDistribution_->Next(),
+        auto new_sm = std::make_shared<SessionKeyedIncrementalStateMachine>(KeyDistribution_->Next(),
                                                                          serviceTimeDistribution,
                                                                          windowStartTime,
                                                                          windowEndTime,
@@ -553,7 +563,7 @@ void SessionKeyedHolistic::assignStateMachines() {
                     auto winToKeep = stateMachineToKeep->winId();
                     //std::cout << "Win id to keep: " << winToKeep << std::endl;
                     auto winToDelete = stateMachineToDelete->winId();
-                     //std::cout << "Win id to delete: " << winToDelete << std::endl;
+                    //std::cout << "Win id to delete: " << winToDelete << std::endl;
                     auto newEnd = std::max(stateMachine1->getEndTime(), stateMachine2->getEndTime());
                     auto mappings = &windowMappings[event->key_];
                     auto mKeep = mappings->at(sessionIdToDelete1);

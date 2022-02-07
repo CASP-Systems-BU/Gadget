@@ -8,7 +8,23 @@
 class  Operator {
 public:
     enum  operatorName : uint16_t {
-        none = 0 , OperatorWindowTumblingAllIncremental, OperatorWindowTumblingAllHolistic, OperatorWindowTumblingKeyedIncremental, OperatorWindowTumblingKeyedHolistic , OperatorWindowSlidingAllIncremental, OperatorWindowSlidingAllHolistic,  OperatorWindowSlidingKeyedIncremental, OperatorWindowSlidingKeyedHolistic, OperatorJoinTumbling, OperatorJoinSliding, OperatorJoinInterval , OperatorContinuousAggregation,  OperatorFlinkTrace,  OperatorYCSBTrace, OperatorContinuousJoin
+        none = 0 , OperatorWindowTumblingAllIncremental,
+        OperatorWindowTumblingAllHolistic,
+        OperatorWindowTumblingKeyedIncremental,
+        OperatorWindowTumblingKeyedHolistic ,
+        OperatorWindowSlidingAllIncremental,
+        OperatorWindowSlidingAllHolistic,
+        OperatorWindowSlidingKeyedIncremental,
+        OperatorWindowSlidingKeyedHolistic,
+        OperatorJoinTumbling,
+        OperatorJoinSliding,
+        OperatorJoinInterval ,
+        OperatorContinuousAggregation,
+        OperatorFlinkTrace,
+        OperatorYCSBTrace,
+        OperatorContinuousJoin,
+        OperatorSessionHolistic,
+        OperatorSessionIncremental
     };
     virtual ~Operator() = default;
     virtual  bool runOperator(std::vector<std::shared_ptr<Operation>> &operationList)  = 0;

@@ -9,7 +9,11 @@
 class  StateMachines {
 public:
     enum StatesType {
-        GetState = 0, PutState, MergeState, FinalGetState, FinalDeleteState, ScanState, NextState, GetMetaState, MergeMetaState, DeleteMetaState
+        GetState = 0, PutState, MergeState, FinalGetState, FinalDeleteState, ScanState, NextState, GetMetaState, MergeMetaState, DeleteMetaState,
+        GetMetadataState,
+        MergeMetadataState,
+        DeleteMetadataState,
+        LimboState
     };
 
     enum StateMachineType {

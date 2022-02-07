@@ -22,6 +22,8 @@
 #include "include/gadget/operator/operators/continuousJoin.h"
 #include "include/gadget/operator/operators/ycsbReplayer.h"
 #include "include/gadget/operator/operators/flinkReplayer.h"
+#include "include/gadget/operator/operators/sessionHolistic.h"
+#include "include/gadget/operator/operators/sessionIncremental.h"
 
 
 
@@ -59,6 +61,10 @@ public:
             return std::make_shared<FlinkRePlayer>(params->traceFilePath);
         } else if (params->operatorType == Operator::OperatorYCSBTrace) {
             return std::make_shared<YCSBRePlayer>(params->traceFilePath);
+        }  else if(params->operatorType == Operator::OperatorSessionHolistic) {
+            return std::make_shared<SessionKeyedHolistic>(params);
+        } else if(params->operatorType == Operator::OperatorSessionIncremental) {
+              return std::make_shared<SessionKeyedIncremental>(params);
         }
         return {};
     }

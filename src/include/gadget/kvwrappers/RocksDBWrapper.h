@@ -4,16 +4,12 @@
 
 #ifndef GADGET_ROCKSDBWRAPPER_H
 #define GADGET_ROCKSDBWRAPPER_H
-//
-// Created by Showan Asyabi on 4/3/21.
-//
 
 #include <memory>
 #include <string>
 #include <vector>
 #include <fstream>
 #include <iostream>
-#include <chrono>
 
 #include "include/gadget/performanceMetrics.h"
 #include "include/gadget/kvwrappers/kvwrapper.h"

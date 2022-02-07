@@ -23,7 +23,7 @@ public:
     }
 
     bool connect() override {
-       return true;
+        return true;
     }
 
     bool disconnect() override {

@@ -1,7 +1,6 @@
 
-
-#ifndef GADGET_SESSIONHOLISTIC_H
-#define GADGET_SESSIONHOLISTIC_H
+#ifndef GADGET_SESSIONINCREMENTAL_H
+#define GADGET_SESSIONINCREMENTAL_H
 
 // TODO (john): Move some of the following to the base classes
 #include <algorithm>
@@ -37,7 +36,7 @@ typedef std::string ValueT;  // TODO (john): Rename this to 'Value' and change '
 
 
 // TODO (john): Merge this with Operation in operation.h
-class  StateOperation {
+class  StateOperation2 {
 
 public:
     /***
@@ -47,7 +46,7 @@ public:
      * @param key: The key to access state
      * @param value: The value associated with the key (can be empty, e.g., for get and delete operations)
      */
-    explicit StateOperation(Operation::OperationType opType,
+    explicit StateOperation2(Operation::OperationType opType,
                             Timestamp  time,
                             KeyT key,
                             ValueT value);
@@ -55,7 +54,7 @@ public:
      *
      * Generates an empty state operation of the given type
      */
-    explicit StateOperation(Operation::OperationType opType);
+    explicit StateOperation2(Operation::OperationType opType);
 
     /***
      *
@@ -84,7 +83,7 @@ public:
     std::string toString(bool=false);
 };
 
-class  SessionKeyedHolisticStateMachine {
+class  SessionKeyedIncrementalStateMachine {
 
 
 
@@ -105,7 +104,7 @@ public:
      * @param endTime: The end time of the window the state machine corresponds to
      * @param operatorInstance: The session window operator instance associated with the state machine
      */
-    explicit SessionKeyedHolisticStateMachine(std::string currentKey ,
+    explicit SessionKeyedIncrementalStateMachine(std::string currentKey ,
                                               std::shared_ptr<ServiceTime>  serviceTimeDistribution,
                                               uint64_t startTime,
                                               uint64_t endTime,
@@ -236,7 +235,7 @@ private:
      *
      * The last generated operation on state
      */
-    std::shared_ptr<StateOperation> lastOperation;
+    std::shared_ptr<StateOperation2> lastOperation;
     /**
      *
      * The transition delay from the current state to the next one
@@ -256,10 +255,10 @@ private:
 };
 
 // TODO (john): Move this to 'WindowStateMachine'
-class  ExpirationIndex {
+class  ExpirationIndex2 {
 
 public:
-    explicit ExpirationIndex(uint64_t lateness);
+    explicit ExpirationIndex2(uint64_t lateness);
 
     /***
      *
@@ -270,20 +269,20 @@ public:
      *
      * A mapping from event time to the list of state machines that expire at that time
      */
-    std::map<uint64_t, std::list<std::shared_ptr<SessionKeyedHolisticStateMachine>>> expiredStateMachines;
+    std::map<uint64_t, std::list<std::shared_ptr<SessionKeyedIncrementalStateMachine>>> expiredStateMachines;
     /***
      * @param sm: The state machine to add to the index
      */
-    void insert(std::shared_ptr<SessionKeyedHolisticStateMachine> sm);
+    void insert(std::shared_ptr<SessionKeyedIncrementalStateMachine> sm);
     /***
      * @param sm: The state machine to remove form the index
      */
-    void remove(std::shared_ptr<SessionKeyedHolisticStateMachine> sm);
+    void remove(std::shared_ptr<SessionKeyedIncrementalStateMachine> sm);
     /***
      * @param watermark: The timestamp to search for expired state machines
      * @param stateMachinesToClose: The list of exprired state machines removed from the index
      */
-    void collect(Timestamp watermark, std::list<std::shared_ptr<SessionKeyedHolisticStateMachine>> &stateMachinesToClose);
+    void collect(Timestamp watermark, std::list<std::shared_ptr<SessionKeyedIncrementalStateMachine>> &stateMachinesToClose);
     /***
      *
      * @param time: The time to search for state machines
@@ -291,18 +290,18 @@ public:
     uint64_t num(Timestamp time);
 };
 
-class SessionKeyedHolistic : public Operator,
-public std::enable_shared_from_this<SessionKeyedHolistic> {
+class SessionKeyedIncremental : public Operator,
+                             public std::enable_shared_from_this<SessionKeyedIncremental> {
 
 public:
-    explicit SessionKeyedHolistic(std::shared_ptr<OperatorParameters> params);
+    explicit SessionKeyedIncremental(std::shared_ptr<OperatorParameters> params);
 
 
-     /***
-      *
-      * @param operationList  is the list of all state operations for the next batch of events
-      * @return
-      */
+    /***
+     *
+     * @param operationList  is the list of all state operations for the next batch of events
+     * @return
+     */
 
     bool runOperator(std::vector<std::shared_ptr<Operation>> &operationList) override;
 
@@ -310,7 +309,7 @@ public:
      *
      * @return the last generated operation
      */
-    std::shared_ptr<StateOperation> nextOp();
+    std::shared_ptr<StateOperation2> nextOp();
     /***
      *
      * @return true if the operator has more events to process in the input buffer
@@ -333,7 +332,7 @@ public:
      * Generates all state operators triggered by the current event
      * NOTE (john): Must be called after assignStateMahcines()
      */
-    void generateStateOperations();
+    void generateStateOperation2s();
     /**
      *
      * Closes all state machines whose windows have expired and generates the respective state operations
@@ -380,12 +379,12 @@ private:
      *
      * The last generated state operation
      */
-    std::shared_ptr<StateOperation> lastStateOperation;
+    std::shared_ptr<StateOperation2> lastStateOperation2;
     /***
      *
      * The current active state machine in the operator
      */
-    std::shared_ptr<SessionKeyedHolisticStateMachine> currentActiveStateMachine;
+    std::shared_ptr<SessionKeyedIncrementalStateMachine> currentActiveStateMachine;
     /***
      *
      * The input event generator
@@ -453,17 +452,17 @@ private:
      *
      * A mapping from event key to a list of state machines for that key (only one for session window)
      */
-    std::unordered_map<std::string, std::list<std::shared_ptr<SessionKeyedHolisticStateMachine>>> activeStateMachines;
+    std::unordered_map<std::string, std::list<std::shared_ptr<SessionKeyedIncrementalStateMachine>>> activeStateMachines;
     /***
      *
      * A mapping from event time to the list of state machines that expire at that time
      */
-    std::shared_ptr<ExpirationIndex> expiredStateMachines;
+    std::shared_ptr<ExpirationIndex2> expiredStateMachines;
     /***
      *
      * The list of state machines assigned to the current event (only one for session window)
      */
-    std::list<std::shared_ptr<SessionKeyedHolisticStateMachine>> assignedStateMachines;
+    std::list<std::shared_ptr<SessionKeyedIncrementalStateMachine>> assignedStateMachines;
     /**
      *
      * A mapping from key=(start, end) to pairs of the form (winId, #elements)
@@ -483,11 +482,11 @@ private:
      *
      * A FIFO queue of state operations
      */
-    std::queue<std::shared_ptr<StateOperation>> operations;
+    std::queue<std::shared_ptr<StateOperation2>> operations;
 
     // NOTE (john): The associated state machine needs access to the queue of operations
-    friend class SessionKeyedHolisticStateMachine;
+    friend class SessionKeyedIncrementalStateMachine;
 };
 
 
-#endif //GADGET_SESSIONHOLISTIC_H
+#endif //GADGET_SESSIONINCREMENTAL_H
