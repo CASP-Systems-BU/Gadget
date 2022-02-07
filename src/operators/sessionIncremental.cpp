@@ -164,7 +164,7 @@ bool SessionKeyedIncrementalStateMachine::run() {
     }
     assert((state==GetMetadataState) || (state==FinalGetState));
     // A pointer to the session window operator instance associated with the state machine
-    auto op = dynamic_pointer_cast<SessionKeyedIncremental>(opInstance);
+    auto op = std::dynamic_pointer_cast<SessionKeyedIncremental>(opInstance);
     assert(op);
     // TODO (john): Different state transitions should draw from different service time distributions
     if (state==GetMetadataState) {  // Step 1: Generate state operations triggered by the current event
