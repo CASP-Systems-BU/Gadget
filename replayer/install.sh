@@ -72,5 +72,5 @@ patch -p0 < berkelydb_patch
 cd berkerlydb
 ./dist/configure -enable-cxx -enable-stl
 make -j12
-sudo make install
+make install
 cd ..
