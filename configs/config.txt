@@ -17,9 +17,6 @@ first.event.generator.watermark.frequency = 1
 first.event.generator.outoforder.percentage = 2
 first.event.generator.lateness.threshold = 3;
 
-
-
-
 ################################################################ build the operator
 #options(tumbling.all.incremental, tumbling.all.holistic, tumbling.keyed.incremental,
 #tumbling.keyed.holistic, sliding.all.incremental, sliding.all.holistic, sliding.keyed.incremental,
@@ -32,12 +29,13 @@ window.length = 5
 #lower.bound = -120
 
 #******* make a key popularity distribution for the windows key (keys used to access state store) (no need to change this) 
-#options(constant, hotspot, zipf, sequential, uniform)
+#options(constant, hotspot, zipf, sequential, uniform) - no need to change this
 operator.key.popularity.distrib.type = sequential
 operator.key.popularity.distrib.params.keyspacesize = 1000000000
 
-#options(exponential, constant, uniform, normal)
+
 #********  key size distribution (keys used to access state store)
+#options(exponential, constant, uniform, normal)
 operator.key.size.distrib.type = constant
 operator.key.size.distrib.params.constant = 10
 
@@ -47,7 +45,9 @@ operator.value.size.distrib.type = constant
 operator.value.size.distrib.params.constant = 10
 
 ################################################################### build the wrapper ( where the generated operations go- file or a DB)
-# options( file - rocksdb- lethe- berkeley - faster)- If file is chosen  Gadget dumps the generated operations on the file (wrapper.path/gadget.log)
+# options(file - rocksdb- lethe- berkeley - faster)
+#If file is chosen  Gadget dumps the generated stat access operations on the file (wrapper.path/gadget.log)
+#if  you choose to evaluate a KV store, you need to install the KV store first. Please see the experiment sections for more detail
 wrapper.type = file
 wrapper.path = .
 

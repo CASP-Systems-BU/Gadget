@@ -170,12 +170,6 @@ public:
      * return false if  up to the timeUint is already erased
      */
     bool forgetPanes(uint64_t timeUint) override {
-        /*if (timeUint <= lastForgottenTimeUnit_ ) {
-            return false;
-        }
-        uint64_t index =  timeUint - lastForgottenTimeUnit_;
-        activeTimeUnitVector_.erase( activeTimeUnitVector_.begin(), activeTimeUnitVector_.begin() + index); // last element is not deleted
-        lastForgottenTimeUnit_ = timeUint;*/
         return true;
     }
 
@@ -191,14 +185,16 @@ public:
         gadgetTimeUnit_ ++;  /// // the current maximum time
         eventBatch .clear();
 
-        if(outOfOrderPercentage_ > 0 ) {
-            // add out of order  events that are supposed appear in this unit of time
-            if(outOfOrderMap.find(gadgetTimeUnit_) != outOfOrderMap.end()) {
-                for (auto e : outOfOrderMap[gadgetTimeUnit_]) {
-                    eventBatch.push_back(e);
-                }
-                outOfOrderMap.erase(gadgetTimeUnit_);
+        // add out of order  events that are supposed appear in this unit of time
+        if(outOfOrderMap.find(gadgetTimeUnit_) != outOfOrderMap.end()) {
+            for (auto e : outOfOrderMap[gadgetTimeUnit_]) {
+                eventBatch.push_back(e);
             }
+            outOfOrderMap.erase(gadgetTimeUnit_);
+        }
+        uint64_t  destinationTimeUnit = 0 ;
+
+        if(outOfOrderPercentage_ > 0 ) {
 
             while(true) {
                 // make a new Event
@@ -212,7 +208,6 @@ public:
                 */
                 //newEvent->arrivalTime_ = arrivalTimeDistribution_->Next();
                 newEvent->eventTime_ = eventOccurrenceTime_;
-
                 // check if this event is chosen to be out order
                 std::random_device rd;
                 std::mt19937 gen (rd());
@@ -221,14 +216,14 @@ public:
                 std::uniform_int_distribution<> destinationDistrib(gadgetTimeUnit_ + 1,gadgetTimeUnit_ + latenessThreshold_);
                 bool chosenToBeLate = round(ifChooseDistrib(gen)) < outOfOrderPercentage_;
 
-                uint64_t  destinationTimeUnit;
+
                 // the event is chosen to be  out of order
                 if(chosenToBeLate || eventOccurrenceTime_ >= gadgetTimeUnit_) {
                     // determine the  pane that this event should go
                     if (chosenToBeLate) {
                         destinationTimeUnit = round(destinationDistrib(gen));
                     } else {
-                        destinationTimeUnit =  eventOccurrenceTime_/ gadgetTimeUnit_;
+                        destinationTimeUnit =  round(eventOccurrenceTime_);
                     }
 
                     if(outOfOrderMap.find(destinationTimeUnit) != outOfOrderMap.end()) {
@@ -249,10 +244,9 @@ public:
             }
             return gadgetTimeUnit_;
 
-        } else {
+        } else { // there is no out of order events
 
             while (true) {
-                //std::cout << "here" << std::endl;
                 // make a new Event
                 std::shared_ptr<Event> newEvent = std::make_shared<Event>(); // fixme - we have to constructor for  the event class
                 newEvent->key_ = keyPopularity_->Next();
@@ -263,11 +257,14 @@ public:
                  */
                 //newEvent->arrivalTime_ = arrivalTimeDistribution_->Next();
                 newEvent->eventTime_ = eventOccurrenceTime_;
+                //std::cout << newEvent->eventTime_ << std::endl;
                 if (eventOccurrenceTime_ >= gadgetTimeUnit_) {
-                    // fixme maybe its better if we have an approach like pervious  function- it is possible that a  time unit does not have any event
-                    //activeTimeUnitVector_.push_back(currentTimeUnitEvents_);
-                    //currentTimeUnitEvents_.clear();
-                    //currentTimeUnitEvents_.push_back(newEvent);
+                    destinationTimeUnit =  round(eventOccurrenceTime_);
+                    if(outOfOrderMap.find(destinationTimeUnit) != outOfOrderMap.end()) {
+                        outOfOrderMap[destinationTimeUnit].push_back(newEvent);
+                    } else {
+                        outOfOrderMap[destinationTimeUnit] = {newEvent};
+                    }
                     break;
                 }
                 eventBatch.push_back(newEvent);

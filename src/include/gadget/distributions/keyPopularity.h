@@ -382,13 +382,11 @@ public:
     }
 
     std::string Next() override {
-        std::cout << "uniform key"<< std::endl;
         std::random_device rd;
         std::mt19937 gen (rd());
         std::uniform_int_distribution<> distrib(a_, b_);
         int64_t value = round(distrib(gen));
         value =  value % keySpaceSize_;
-        std::cout << "uniform key" << std::to_string(value) <<std::endl;
         return std::to_string(value);
     }
     double  ProbabilityLastKey() override {

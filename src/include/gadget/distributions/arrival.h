@@ -135,7 +135,7 @@ public:
         } else if (distType == Arrival::NormalDistrib) {
             return std::make_shared<NormalDistributionArrival>(params->mean, params->sd);
         } else if (distType == Arrival::ConstantDistrib) {
-            return std::make_shared<ConstantArrival>(params->constantInt);
+            return std::make_shared<ConstantArrival>(params->constantReal);
         }
 
         return {}; // the distType is not valid

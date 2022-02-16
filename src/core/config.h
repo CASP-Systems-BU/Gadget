@@ -170,7 +170,7 @@ public:
                 case KeyPopularity::UniformIntDistrib: // need a and b
                     if(configValues.find("first.event.generator.key.popularity.distrib.params.a") != configValues.end()) {
                         try {
-                            distributionParameters->a_real = stod(configValues["first.event.generator.key.popularity.distrib.params.a"]);
+                            distributionParameters->a_int = stod(configValues["first.event.generator.key.popularity.distrib.params.a"]);
                         } catch (...) {
                             std::cout<<"Error:  firstEventGenerator&KeyPopularity: " << "KeyPopularity- The a parameter (first.event.generator.key.popularity.distrib.params.a)  must be a number" << std::endl;
                             return {};
@@ -182,7 +182,7 @@ public:
 
                     if(configValues.find("first.event.generator.key.popularity.distrib.params.b") != configValues.end()) {
                         try {
-                            distributionParameters->b_real = stod(configValues["first.event.generator.key.popularity.distrib.params.b"]);
+                            distributionParameters->b_int = stod(configValues["first.event.generator.key.popularity.distrib.params.b"]);
                         } catch (...) {
                             std::cout<<"Error:  firstEventGenerator&KeyPopularity: "<< "The b parameter (first.event.generator.key.popularity.distrib.params.b)  must be a number" << std::endl;
                             return {};
