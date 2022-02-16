@@ -173,7 +173,7 @@ bool SessionKeyedIncrementalStateMachine::run() {
         currentOpr = Operation::getOpr;
         lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, metaKey, ""));
         op->operations.push(lastOperation);
-        currentSleepPeriod += serviceTimeDistribution->Next();
+        //currentSleepPeriod += serviceTimeDistribution->Next();
         numOfDoneOperation++;
         // TODO (john): get-put in state stores
         // Step 1.2: Generate operation that merges current event to the assigned window in the state store
@@ -181,7 +181,7 @@ bool SessionKeyedIncrementalStateMachine::run() {
         lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, currentKey,
                                                                         op->ValueDistribution_->Next()));
         op->operations.push(lastOperation);
-        currentSleepPeriod += serviceTimeDistribution->Next();
+        //currentSleepPeriod += serviceTimeDistribution->Next();
         numOfDoneOperation++;
 
 
@@ -189,7 +189,7 @@ bool SessionKeyedIncrementalStateMachine::run() {
         lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, currentKey,
                                                                         op->ValueDistribution_->Next()));
         op->operations.push(lastOperation);
-        currentSleepPeriod += serviceTimeDistribution->Next();
+        //currentSleepPeriod += serviceTimeDistribution->Next();
         numOfDoneOperation++;
 
 
@@ -203,20 +203,20 @@ bool SessionKeyedIncrementalStateMachine::run() {
                 currentOpr = Operation::getOpr;
                 lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, winId, ""));
                 op->operations.push(lastOperation);
-                currentSleepPeriod += serviceTimeDistribution->Next();
+                //currentSleepPeriod += serviceTimeDistribution->Next();
                 numOfDoneOperation++;
                 // Step 1.3.2: Generate operation that merges window contents with the contents of the new window
                 currentOpr = Operation::mergeOpr;
                 std::string v(numElements * op->ValueDistribution_->Next().size(), '0');  // A std::string of size equal to the size of the merged window contents
                 lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, currentKey, v));
                 op->operations.push(lastOperation);
-                currentSleepPeriod += serviceTimeDistribution->Next();
+                //currentSleepPeriod += serviceTimeDistribution->Next();
                 numOfDoneOperation++;
                 // Step 1.3.3: Generate operation that deletes the merged window
                 currentOpr = Operation::deleteOpr;
                 lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, winId, ""));
                 op->operations.push(lastOperation);
-                currentSleepPeriod += serviceTimeDistribution->Next();
+                //currentSleepPeriod += serviceTimeDistribution->Next();
                 numOfDoneOperation++;
             }
             // Step 1.3.4: Generate operation that deletes the metadata for the current key
@@ -224,7 +224,7 @@ bool SessionKeyedIncrementalStateMachine::run() {
                 currentOpr = Operation::deleteOpr;
                 lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, metaKey, ""));
                 op->operations.push(lastOperation);
-                currentSleepPeriod += serviceTimeDistribution->Next();
+                //currentSleepPeriod += serviceTimeDistribution->Next();
                 numOfDoneOperation++;
             }
             // else {
@@ -240,7 +240,7 @@ bool SessionKeyedIncrementalStateMachine::run() {
                 lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, metaKey,
                                                                                 op->metadataEntry));
                 op->operations.push(lastOperation);
-                currentSleepPeriod += serviceTimeDistribution->Next();
+                //currentSleepPeriod += serviceTimeDistribution->Next();
                 numOfDoneOperation++;
             }
         }
@@ -249,7 +249,7 @@ bool SessionKeyedIncrementalStateMachine::run() {
             lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, metaKey,
                                                                             op->metadataEntry));
             op->operations.push(lastOperation);
-            currentSleepPeriod += serviceTimeDistribution->Next();
+            //currentSleepPeriod += serviceTimeDistribution->Next();
             numOfDoneOperation++;
         }
     }
@@ -258,19 +258,19 @@ bool SessionKeyedIncrementalStateMachine::run() {
         currentOpr = Operation::getOpr;
         lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, currentKey, ""));
         op->operations.push(lastOperation);
-        currentSleepPeriod += serviceTimeDistribution->Next();
+        //currentSleepPeriod += serviceTimeDistribution->Next();
         numOfDoneOperation++;
         // Step 2.2: Generate operation that deletes the expired window
         currentOpr = Operation::deleteOpr;
         lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, currentKey, ""));
         op->operations.push(lastOperation);
-        currentSleepPeriod += serviceTimeDistribution->Next();
+        //currentSleepPeriod += serviceTimeDistribution->Next();
         numOfDoneOperation++;
         // Step 2.3: Generate operation that deletes metadata for the current key
         currentOpr = Operation::deleteOpr;
         lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, metaKey, ""));
         op->operations.push(lastOperation);
-        currentSleepPeriod += serviceTimeDistribution->Next();
+        //currentSleepPeriod += serviceTimeDistribution->Next();
         numOfDoneOperation++;
         // Step 2.4: Generate operations that insert metadata entries for the current key
         // NOTE (john): Is this a single operation or multiple operations?
@@ -280,7 +280,7 @@ bool SessionKeyedIncrementalStateMachine::run() {
             lastOperation = std::make_shared<StateOperation2>(StateOperation2(currentOpr, currentSleepPeriod, metaKey,
                                                                             op->metadataEntry));
             op->operations.push(lastOperation);
-            currentSleepPeriod += serviceTimeDistribution->Next();
+            //currentSleepPeriod += serviceTimeDistribution->Next();
             numOfDoneOperation++;
         }
     }
