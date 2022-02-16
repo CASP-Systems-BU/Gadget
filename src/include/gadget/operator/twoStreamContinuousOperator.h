@@ -90,7 +90,7 @@
                         opr->oprType = m->NextOperation();
                         opr->key = m->getMachineKey();
                         opr->value = valueDistribution_->Next();
-                        opr->sleepTime = serviceTimeDistribution_->Next(); // fixme
+                        //opr->sleepTime = serviceTimeDistribution_->Next(); // fixme
                         operationList.push_back(opr);
                     }
                 }

@@ -86,7 +86,7 @@ public:
                     opr->oprType = m->NextOperation();
                     opr->key = m->getMachineKey();
                     opr->value = valueDistribution_->Next();
-                    opr->sleepTime = serviceTimeDistribution_->Next();
+                    //opr->sleepTime = serviceTimeDistribution_->Next();
                     operationList.push_back(opr);
                 }
             }
