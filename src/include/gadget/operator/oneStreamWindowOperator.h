@@ -128,7 +128,7 @@ public:
                     }
                 }
                 // windows are sorted.  this  means the  needed window does not exist
-                if (stateMachineDictionary_.find(eventKey) == stateMachineDictionary_.end() ||  stateMachineDictionary_[eventKey].back()->getFinishTime() < windowFinishTime) {
+                if (stateMachineDictionary_.find(eventKey) == stateMachineDictionary_.end() || (  stateMachineDictionary_[eventKey].size() > 0 &&  stateMachineDictionary_[eventKey].back()->getFinishTime() < windowFinishTime)) {
                     auto newStateMachines = StateMachineBuilder::BuildStateMachine(stateMachineType_, keyDistribution_->Next()
                             , wStartTime, windowFinishTime);
                     if(!newStateMachines.has_value()) {

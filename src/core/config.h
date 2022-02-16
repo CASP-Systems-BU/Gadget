@@ -1389,11 +1389,11 @@ public:
                         try {
                             distributionParameters->lambda = stod(configValues["operator.value.size.distrib.params.lambda"]);
                         } catch (...) {
-                            std::cout<<"Error: operator&ValueSizeDistrib: " << "Lambda (perator.value.size.distrib.params.lambda) must be a number!" << std::endl;
+                            std::cout<<"Error: operator&ValueSizeDistrib: " << "Lambda (operator.value.size.distrib.params.lambda) must be a number!" << std::endl;
                             return {};
                         }
                     } else { // the needed  parameter does not exist
-                        std::cout<<"Error: operator&ValueSizeDistrib:" << "parameter Lambda (perator.value.size.distrib.params.lambda) must be defined" << std::endl;
+                        std::cout<<"Error: operator&ValueSizeDistrib:" << "parameter Lambda (operator.value.size.distrib.params.lambda) must be defined" << std::endl;
                         return {};
                     }
                     break;
