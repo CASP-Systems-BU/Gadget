@@ -14,8 +14,8 @@ first.event.generator.key.popularity.distrib.params.keyspacesize= 1000000
 first.event.generator.event.occurrence.gap.distrib.type = exponential
 first.event.generator.event.occurrence.gap.distrib.params.lambda= 10
 first.event.generator.watermark.frequency = 1
-first.event.generator.outoforder.percentage = 2
-first.event.generator.lateness.threshold = 3;
+first.event.generator.outoforder.percentage = 0
+first.event.generator.lateness.threshold = 3
 
 ################################################################ build the operator
 #options(tumbling.all.incremental, tumbling.all.holistic, tumbling.keyed.incremental,
