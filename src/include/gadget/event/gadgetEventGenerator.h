@@ -195,7 +195,6 @@ public:
         uint64_t  destinationTimeUnit = 0 ;
 
         if(outOfOrderPercentage_ > 0 ) {
-
             while(true) {
                 // make a new Event
                 std::shared_ptr<Event> newEvent = std::make_shared<Event>(); // fixme -   need a constructor for  the event class
@@ -245,7 +244,6 @@ public:
             return gadgetTimeUnit_;
 
         } else { // there is no out of order events
-
             while (true) {
                 // make a new Event
                 std::shared_ptr<Event> newEvent = std::make_shared<Event>(); // fixme - we have to constructor for  the event class
@@ -296,7 +294,7 @@ public:
     // the  time threshold for accepting out of order events
     uint64_t latenessThreshold_;
     // the  the fraction of events that are going to be late
-    uint8_t outOfOrderPercentage_;
+    double outOfOrderPercentage_;
     // a map that hold events belonging to the future time units
     std::unordered_map<uint64_t, std::vector<std::shared_ptr<Event>>> outOfOrderMap;
     uint64_t  totalNumOfGeneratedEvents_;

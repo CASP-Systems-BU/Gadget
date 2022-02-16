@@ -549,7 +549,7 @@ public:
 
                 if(configValues.find("first.event.generator.lateness.threshold") != configValues.end() ) {
                     try {
-                        eventGeneratorParams->outOfOrderPercentage = stoi(configValues["first.event.generator.lateness.threshold"]);
+                        eventGeneratorParams->latenessThreshold = stoi(configValues["first.event.generator.lateness.threshold"]);
                     } catch (...) {
                         std::cout << "Error:  first.event.generator & lateness threshold " << " first.event.generator.lateness.threshold  must be an integer number"
                                   << std::endl;
@@ -1053,7 +1053,7 @@ public:
 
                 if(configValues.find("second.event.generator.lateness.threshold") != configValues.end() ) {
                     try {
-                        eventGeneratorParams->outOfOrderPercentage = stoi(configValues["second.event.generator.lateness.threshold"]);
+                        eventGeneratorParams->latenessThreshold = stoi(configValues["second.event.generator.lateness.threshold"]);
                     } catch (...) {
                         std::cout << "Error:  second.event.generator & lateness threshold " << " second.event.generator.lateness.threshold  must be an integer number"
                                   << std::endl;

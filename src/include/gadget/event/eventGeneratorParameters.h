@@ -28,7 +28,7 @@ public:
     std::shared_ptr<KeyPopularity> keyPopularity;
 
     //  event generator can create out of order events
-    double latenessThreshold;
+    uint64_t latenessThreshold; // unit of time
     double outOfOrderPercentage;
 
     // if events are located in the file. eventFilePath is the path of that file
