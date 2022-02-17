@@ -127,7 +127,7 @@ The results will be located in folder `thirdExpr`. The generated figures should 
 - run the container as described before
 
 - go to replayer folder `cd /home/replayer/`
--  ./compile.sh 
+-  `./compile.sh` 
 - remove previous generated ycsb trace if any. `rm workload/mywl_*`
 
 - run experiments
