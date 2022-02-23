@@ -4,20 +4,20 @@ Gadget is a benchmark for an accurate evaluation of KV stores for stateful strea
 
 # Description & Requirements
 
-## How to access
+**How to access**
 
 Gadget can be downloaded from the following link: https://github.com/CASP-Systems-BU/Gadget
 
-## Hardware dependencies
+**Hardware dependencies**
 
 We used the following hardware for our experiments:
 We run all experiments on a dual-socket machine equipped with 12-core Intel Xeon 4116 CPU running at 2.1 GHz, 32 GB of RAM, and 512GB PC400 NVMe(SK hynix) hard disk. 
 
-## Software dependencies
+**Software dependencies**
 
 We use Ubuntu 20.04 (Linux kernel version5.4). To evaluate a KV store performance using Gadget, you need to install the KV store on your system. To make this step straightforward, we provide a container that already has all KV stores discussed in this paper installed.
 
-## Benchmarks
+**Benchmarks**
 
 In our experiments, we use traces from Google's Borg system. The provided container includes these traces.
 
@@ -92,7 +92,7 @@ This experiment runs Gadget to generate traces for three operators and compares 
 - see the result in folder experiment1. `cd firstExpr`
  
 
-#### [Results]
+**Results**
 
 The results will be located in folder `firstExpr`. The generated figures should be similar to those shown in Figure 10.
 
@@ -109,7 +109,7 @@ This experiment evaluates kv stores using gadget generated traces, YCSB traces (
 
 - see the result in folder experiment2 `cd secondExpr` 
 
-#### [Results]
+**Results**
 
 The results will be located in folder `secondExpr`. The generated figures should be similar to those shown in Figure 11.
 
@@ -126,7 +126,7 @@ This experiment compares the performance of KV stores for all operators using Ga
 
 - see the result in folder experiment3 `cd thirdExpr`
 
-#### [Results]
+**Results**
 
 The results will be located in folder `thirdExpr`. The generated figures should be similar to those shown in Figure 13
 
@@ -145,9 +145,7 @@ python3 runfig12.py
 
 - The figures will be generated here, with filename `fig12_plot_*`
 
-
-
-#### [Results]
+**Results**
 
 The generated figures should be similar to those shown in Figure 12, but note that different hardware may lead to different result in some cases.
 
