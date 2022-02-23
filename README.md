@@ -25,24 +25,35 @@ In our experiments, we use traces from Google's Borg system. The provided contai
 
 ## Evaluation workflow
 
-To evaluate Gadget, one should take the following steps:
+**Evaluate in provided docker container**
+
+We have prepared a docker image (with compiled Gadget and DBs installed) for reviewers. To evaluate Gadget, one should take the following steps:
 
 - Download the Gadget container from the following link: https://drive.google.com/drive/folders/198RUZYpE0Sfb1Fn1wGeJDrK7M1N3eRQr
 
 - Run the container using the following commands:
 
--- Install docker on your computer 
+1. Install docker on your computer 
 
--- Import the downloaded image. `sudo docker import gadget_cont.tar`
+2. Import the downloaded image. `sudo docker import gadget_cont.tar`
 
--- Use `sudo docker images` List all images on the machine, and remember the ID of the image added to the system. For example: 482b416487f3
+3. Use `sudo docker images` List all images on the machine, and remember the ID of the image added to the system. For example: 482b416487f3
 
--- Start the container with this image(The root password for the container is 1): `sudo docker run -t -i 482b416487f3 /bin/bash`
+4. Start the container with this image(The root password for the container is 1): `sudo docker run -t -i 482b416487f3 /bin/bash`
 
--- Go to the gadget folder and run the experiments by running shell scripts designed for each experiment. `cd /home/gadget/build/src/`
+5. Go to the gadget folder and run the experiments by running shell scripts designed for each experiment. `cd /home/gadget/build/src/`
+
+
+**Run Gadget on your own system**
 
 If you wish to compile Gadget, try it out on your system. You can follow the following steps:
 
+1. Install dependencies. This script will install all the dependency libraries and the 4 KV stores we used in the paper(RocksDB, Lethe, FASTER, BerkeleyDB)
+```
+sudo ./replayer/install.sh
+```
+
+2. compile Gadget
 ```
     Downlaod gadget 
     cd Gadget
@@ -53,10 +64,7 @@ If you wish to compile Gadget, try it out on your system. You can follow the fol
     cd src
 ```
 
-To run gadget, you can use one of our config files provided in `configs` folder and run Gadget by `./gadget config.txt`
- 
- 
-This example generates the state access workload for a tumbling window operator. The results go to a file named `gadget.log`. Note that to evaluate a KV store using Gadget, the KV store must be installed on the system.
+3. To run gadget, you can use one of our config files provided in `configs` folder and run Gadget by `./gadget config.txt`. This example generates the state access workload for a tumbling window operator. The results go to a file named `gadget.log`. Note that to evaluate a KV store using Gadget, the KV store must be installed on the system.
 
 
 # Major Claims
