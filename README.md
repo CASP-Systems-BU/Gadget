@@ -142,3 +142,9 @@ python3 runfig12.py
 #### [Results]
 
 The generated figures should be similar to those shown in Figure 12, but note that different hardware may lead to different result in some cases.
+
+# Conference Paper
+
+A New Benchmark Harness for Systematic and Robust Evaluation of Streaming State Stores. Esmail Asyabi, Yuanli Wang, John Liagouris, Vasiliki Kalavri, Azer Bestavros. EuroSys 2022 (to appear)
+
+
