@@ -55,8 +55,10 @@ In our experiments, we use traces from Google's Borg system. These traces can be
 ## Install and Run Gadget
 
 If you wish to compile Gadget and try it out on your system. You can follow the following steps:
+1. install build essentials (e.g., compiler):
+ 'sudo sh install_build_essentals.sh'
 
-1. compile Gadget:
+2. compile Gadget:
 ```
     git clone git@github.com:CASP-Systems-BU/Gadget.git
     cd Gadget
@@ -67,7 +69,7 @@ If you wish to compile Gadget and try it out on your system. You can follow the 
     cd src
 ```
 
-2. To run gadget, you can use one of our config files provided in `configs` folder([here](./configs)).  
+3. To run gadget, you can use one of our config files provided in `configs` folder([here](./configs)).  
    
    Run Gadget by:
    
