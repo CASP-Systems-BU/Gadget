@@ -95,7 +95,7 @@ SessionKeyedHolisticStateMachine::SessionKeyedHolisticStateMachine(std::string c
                                                                    std::shared_ptr<ServiceTime>  serviceTimeDistribution,
                                                                    uint64_t startTime,
                                                                    uint64_t finishTime,
-                                                                   std::shared_ptr<Operator> operatorInstance){ // fixme make std::string ref const
+                                                                   std::shared_ptr<SessionKeyedHolistic> operatorInstance){ // fixme make std::string ref const
     this->currentKey = currentKey;
     this->startTime = startTime;
     this->endTime = finishTime;

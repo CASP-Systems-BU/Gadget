@@ -88,8 +88,8 @@ int drive_machine(const std::string& pathToConfigFile) {
     while (true) {
         operationsBatch.clear();
         bool operationsLeft = newOperator.value()->runOperator(operationsBatch);
-        numberProducedOperation += operationsBatch.size();
-       //std::cout << "num of generated operations" << numberProducedOperation << std::endl;
+        //numberProducedOperation += operationsBatch.size();
+        //std::cout << "num of generated operations" << numberProducedOperation << std::endl;
         for (auto opr : operationsBatch ) {
             numberProducedOperation ++;
             wrapper.value()->operationsList.push_back(opr->oprType);
