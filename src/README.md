@@ -7,6 +7,7 @@
 
 ## Gadget Structure
 ```bash
+> tree .
 ├── core
 ├── include
 │   └── gadget
