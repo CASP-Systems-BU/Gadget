@@ -40,18 +40,23 @@ mv ycsb-0.17.0 ycsb-0.17.0-rocksdb
 ```
 
 
+#### clean previously installed KV srotes
+
+- Make sure you did not install them before
+
+```
+## clean
+rm -rf rocksdb6114
+rm -rf ycsb-0.17.0-rocksdb
+rm -rf FASTER
+rm -rf lethe
+rm -rf berkerlydb
+```
+
 ## Install kvstores
 
 #### RocksDB
 
-- Make sure you did not install RocksDB before
-
-```
-rm -rf /usr/local/include/rocksdb \
-  /usr/local/lib/librocksdb_*
-
-or, go to rocksdb repo, then make uninstall
-```
 
 - Download 
 ```
@@ -82,7 +87,7 @@ git clone https://github.com/microsoft/FASTER.git
 cd FASTER
 git checkout 5501dfb24b079b2601665568bfbffcd54065bec1
 cd ..
-patch -p0 < faster_patch    # https://github.com/microsoft/FASTER/commit/4b45c91e85217531e4065f30ecc230b6523734f8#diff-4f1d923a282498709c41b2022f09ce6b6980c0f0e49b5e1917432bc701375df1
+patch -p0 < faster_patch    # fix a bug in faster: https://github.com/microsoft/FASTER/commit/4b45c91e85217531e4065f30ecc230b6523734f8#diff-4f1d923a282498709c41b2022f09ce6b6980c0f0e49b5e1917432bc701375df1
 
 ```
 
