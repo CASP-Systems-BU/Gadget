@@ -79,9 +79,7 @@ sudo ./install.sh
    `./gadget config.txt`. 
    
    This example generates the state access workload for a tumbling window operator. The results go to a file named `gadget.log`. 
-   
-   Please note that to evaluate a KV store using Gadget, the KV store must be installed on the system. 
-   
+ 
 
 ## Configure Gadget
 Please see [here](./configs) for a detailed description of the Gadget configuration.
