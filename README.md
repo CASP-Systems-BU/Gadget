@@ -8,8 +8,10 @@ Gadget is a benchmark for an accurate evaluation of KV stores for stateful strea
 ## Table of Contents
   - [Description & Requirements](#description--requirements)
   - [Set-up](#set-up)
+    - [Evaluate in provided docker container](#evaluate-in-provided-docker-container)
+    - [Run Gadget on your own system](#run-gadget-on-your-own-system)
   - [Major Claims](#major-claims)
-  - [Experiments](#experiments)
+  - [Experiments and expected results](#experiments-and-expected-results)
   - [Conference Paper](#conference-paper)
   - [License](#license)
 
@@ -91,7 +93,9 @@ sudo ./install.sh
 
 ## Experiments and expected results
 
-### Experiment (E1): [Claim 1] [1 human-hour]: 
+### Experiment (E1): 
+
+**[Claim 1] [1 human-hour]**
 
 This experiment runs Gadget to generate traces for three operators and compares it with real traces (located in `/home/gadget/build/src/flinkt/`) in terms of spatial and temporal locality.
 
@@ -109,7 +113,9 @@ This experiment runs Gadget to generate traces for three operators and compares 
 The results will be located in folder `firstExpr`. The generated figures should be similar to those shown in Figure 10.
 
 
-### Experiment (E2): [Claim 2] [3 human-hours] 
+### Experiment (E2): 
+
+**[Claim 2] [3 human-hours]**
 
 This experiment evaluates kv stores using gadget generated traces, YCSB traces (located in `/home/gadget/build/src/ycsbt`) and real traces (located in `/home/gadget/build/src/flinkt/`) in terms of throughput and latency.
 
@@ -126,7 +132,9 @@ This experiment evaluates kv stores using gadget generated traces, YCSB traces (
 The results will be located in folder `secondExpr`. The generated figures should be similar to those shown in Figure 11.
 
 
-### Experiment (E3): [Claim 3] [3 human-hours]
+### Experiment (E3): 
+
+**[Claim 3] [3 human-hours]**
 
 This experiment compares the performance of KV stores for all operators using Gadget.
 
@@ -142,7 +150,9 @@ This experiment compares the performance of KV stores for all operators using Ga
 
 The results will be located in folder `thirdExpr`. The generated figures should be similar to those shown in Figure 13
 
-### Experiment (E4): [Claim 4] [1 human-hour]
+### Experiment (E4): 
+
+**[Claim 4] [1 human-hour]**
 
 - run the container as described before
 
