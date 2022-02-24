@@ -6,6 +6,8 @@ replay ycsb traces on KV stores
 
 - remove previous generated ycsb trace. `rm workload/mywl_*`
 
+- change the path of KV stores in  `./compile.sh`.
+
 - run experiments
 ```
 ./compile.sh
