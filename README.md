@@ -21,8 +21,7 @@ Gadget is a benchmark for an accurate evaluation of KV stores for stateful strea
 ```bash
 > tree .
 ├── configs                # Instructions on how to configure Gadget
-├── experiments
-│   ├── cmakes             # 
+├── experiments            # Instructions on how to compile Gadget with different KV stores
 ├── replayer               # replay ycsb trace on KV stores
 ├── src                    # Gadget Source Code
 └── tests                  # Unit Test of Gadget
@@ -81,7 +80,7 @@ If you wish to compile Gadget, try it out on your system. You can follow the fol
 sudo ./install.sh
 ```
 
-2. compile Gadget
+2. compile Gadget. You can refer [this](https://github.com/CASP-Systems-BU/Gadget/blob/main/experiments/README.md) about how to configure which KV store to use in Gadget.
 ```
     git clone git@github.com:CASP-Systems-BU/Gadget.git
     cd Gadget
