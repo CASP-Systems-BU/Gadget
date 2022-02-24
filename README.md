@@ -10,8 +10,8 @@ Gadget is a benchmark for an accurate evaluation of KV stores for stateful strea
   - [Install and Run Gadget](#Install-and-Run-Gadget)
   - [Configure Gadget](#Configure-Gadget)
   - [Experiments with Gadget](#Experiments-with-Gadget)
-  - [Gadget Source Code](#Gadget-Source-Codet)
-  - [Reproducing the EuroSys22 results](Reproducing-the-EuroSys22-results)
+  - [Gadget Source Code](#Gadget-Source-Code)
+  - [Reproducing the EuroSys22 results](#Reproducing-the-EuroSys22-results)
   - [Conference Paper](#conference-paper)
   - [License](#license)
 
