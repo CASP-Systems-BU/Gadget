@@ -1,22 +1,22 @@
 
 # Gadget
 Gadget source code contains three main folders explained in detail:
--The core folder contains the Gadget's main, compiler, and latency measurement functions.
--The include folder that contains the distributions, event generators, key-value store wrappers, operators headers, and state machines
--The operators folder that contains the logic of all operators (e.g., tumbling and sliding windows)
+- The core folder contains the Gadget's main, compiler, and latency measurement functions.
+- The include folder that contains the distributions, event generators, key-value store wrappers, operators headers, and state machines
+- The operators folder that contains the logic of all operators (e.g., tumbling and sliding windows)
 
 
 ## Table of Contents
 
-- [Project Structure](#project-structure)
-  - [Gadget core directory](#core)
+- [Project Structure](#Gadget-structure)
+  - [Gadget core directory](#The-core-folder)
   - [Gadget Include directory](#include)
     - [distributions](#distributions)
-    - [event](event)
-    - [kvwrappers](kvwrappers)
+    - [event](#event)
+    - [kvwrappers](#kvwrappers)
     - [operator](#operator)
     - [statemachine](#statemachine)
-  - [operators](#operators)
+  - [operators](#The-operator-folder)
 
 ## Gadget Structure
 ```bash
@@ -54,10 +54,10 @@ Gadget wrappers include wrappers for `RocksDB` , `Faster`, and `BerkeleyDB`. A w
 
 ### operator
 The operator folder contains four main drivers that perform Gadget vertical and horizontal partitioning. 
--`oneStreamContinuousOperator.h` is a driver for continuous operators (e.g., continuous aggregators) that horizontally partitions the input stream.
--`oneStreamWindowOperator.h` horizontally and vertically partition the input stream for window operators (e.g., tumbling and sliding windows).
--`twoStreamContinuousOperator.h`   horizontally partitions two-input streams.  
--`twoStreamWindowOperator.h` horizontally and vertically partition two-input streams (e.g., join operators).
+- `oneStreamContinuousOperator.h` is a driver for continuous operators (e.g., continuous aggregators) that horizontally partitions the input stream.
+- `oneStreamWindowOperator.h` horizontally and vertically partition the input stream for window operators (e.g., tumbling and sliding windows).
+- `twoStreamContinuousOperator.h`   horizontally partitions two-input streams.  
+- `twoStreamWindowOperator.h` horizontally and vertically partition two-input streams (e.g., join operators).
 ### statemachine
 This folder contains current state machines in Gadget. A state machine's goal is to generate a sequence of state accesses needed to process each event. For example, in an incremental tumbling window operator, two operations are needed to process each event: `get` and `put`.   
 
