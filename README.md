@@ -153,4 +153,8 @@ The generated figures should be similar to those shown in Figure 12, but note th
 
 A New Benchmark Harness for Systematic and Robust Evaluation of Streaming State Stores. Esmail Asyabi, Yuanli Wang, John Liagouris, Vasiliki Kalavri, Azer Bestavros. EuroSys 2022 (to appear)
 
+## License
+
+Gadget is released under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 
