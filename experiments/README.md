@@ -1,6 +1,12 @@
-# Gadget in action
+# Gadget in Action
 
 Gadget can be used to generate state store workload for operators it currently supports. In addition, Gadget users can evaluate the performance of a KV store for an operator. To this end, users need to install the KV store and modify the Gadget CMake file with the path of the installed KV store. Here, we present the CMake files and instructions to evaluate the performance of RocksDB, BerkeleyDB, and Faster.
+
+# Table of Contents
+
+- [Experiment with RocksDB](#ExperimentwithRocksDB)
+- [Experiment with Faster](#ExperimentwithFaster)
+- [Experiment with BerkeleyDB](#ExperimentwithBerkeleyDB)
 
 
 ## Experiment with RocksDB
@@ -15,8 +21,8 @@ cd -
 ```
 cp experiments/CMake.Rocks src/CMakeLists.txt 
 ```
-- Change lines 65 of 'src/CMakeLists.txt' to the path of your installed RocksDB
-- Now compile Gadget and user a config file to do the experiment. In the config file, set the wrapper type of rocksdb
+- Change lines 65 of `src/CMakeLists.txt` to the path of your installed RocksDB
+- Now compile Gadget and user a config file to do the experiment. In the config file, set the wrapper type of `rocksdb`
 
 
 ## Experiment with Faster
@@ -31,7 +37,7 @@ cd -
 ```
 cp experiments/CMake.Faster  src/CMakeLists.txt 
 ```
-- Change lines 65 of 'src/CMakeLists.txt' to the path of your installed Faster
+- Change lines 65 of `src/CMakeLists.txt` to the path of your installed Faster
 - Now compile Gadget and user a config file to do the experiment. In the config file, set the wrapper type of `faster`
 
 ## Experiment with BerkeleyDB
@@ -46,5 +52,5 @@ cd -
 ```
 cp experiments/CMake.BerkeleyDB  src/CMakeLists.txt 
 ```
-- Change lines 65 of 'src/CMakeLists.txt' to the path of your installed BerkeleyDB
-- Now compile Gadget and user a config file to do the experiment. In the config file, set the wrapper type of `berkeley
+- Change lines 65 of `rc/CMakeLists.txt` to the path of your installed BerkeleyDB
+- Now compile Gadget and user a config file to do the experiment. In the config file, set the wrapper type of `berkeley`
