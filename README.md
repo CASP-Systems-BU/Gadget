@@ -22,7 +22,7 @@ Gadget is a benchmark for an accurate evaluation of KV stores for stateful strea
 > tree .
 ├── configs                # Instructions on how to configure Gadget
 ├── experiments
-│   ├── cmakes             # 
+│   ├── cmakes             # Instructions on how to compile Gadget with different KV stores
 ├── replayer               # replay ycsb trace on KV stores
 ├── src                    # Gadget Source Code
 └── tests                  # Unit Test of Gadget
