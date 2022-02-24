@@ -50,7 +50,7 @@ In our experiments, we use traces from Google's Borg system. These traces can be
 
 ##  Reproducing the EuroSys22 results
 
-We have prepared a docker image (with compiled Gadget and DBs installed) for reviewers. Please see [here](./reproduceEuroSysResults) for a detailed description of reproducing the  results presented in the EuroSys22 conference.
+**We have prepared CloudLab profile and a container image (with compiled Gadget and KV stores installed) for reviewers. Please see [here](./reproduceEuroSysResults) for a detailed description of reproducing the results presented in the EuroSys22 conference.**
 
 ## Install and Run Gadget
 
