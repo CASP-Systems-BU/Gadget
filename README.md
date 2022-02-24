@@ -93,7 +93,7 @@ sudo ./install.sh
     cd src
 ```
 
-3. To run gadget, you can use one of our config files provided in `configs` folder and run Gadget by `./gadget config.txt`. This example generates the state access workload for a tumbling window operator. The results go to a file named `gadget.log`. Note that to evaluate a KV store using Gadget, the KV store must be installed on the system.
+3. To run gadget, you can use one of our config files provided in `configs` folder and run Gadget by `./gadget config.txt`. This example generates the state access workload for a tumbling window operator. The results go to a file named `gadget.log`. Note that to evaluate a KV store using Gadget, the KV store must be installed on the system. More details about how to configure Gadgat is [here](https://github.com/CASP-Systems-BU/Gadget/blob/main/configs/README.md).
 
 
 ## Major Claims
