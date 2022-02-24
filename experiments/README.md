@@ -1,6 +1,6 @@
 # Gadget in Action
 
-Gadget can be used to generate state store workload for operators it currently supports. In addition, Gadget users can evaluate the performance of a KV store for an operator. To this end, users need to install the KV store and modify the Gadget CMake file with the path of the installed KV store. Here, we present the CMake files and instructions to evaluate the performance of RocksDB, BerkeleyDB, and Faster.
+Gadget can be used to generate state store workload for operators it currently supports. In addition, Gadget users can evaluate the performance of a KV store for an operator. To this end, users need to install the KV store and modify the Gadget CMake file with the path of the installed KV store. Here, we present the CMake files and instructions to evaluate the performance of RocksDB, Lethe, BerkeleyDB, and Faster.
 
 # Table of Contents
 
