@@ -4,7 +4,16 @@ Gadget results presented in Eurossys 22 conference can be reproduced in two ways
 - Your local machine
 
 
+# Table of Contents
+  - [Reproducing Results on Cloudlab](#description--requirements)
+  - [Reproducing Results on your machine]()
+  - [Major Claims](#major-claims)
+  - [Experiments and expected results](#experiments-and-expected-results)
+
+
+
 # Reproducing Results on Cloudlab
+
 On Cloudlab, instantiate the following public profile: 
 https://www.cloudlab.us/p/easyabi/gadget50
 
@@ -34,24 +43,14 @@ To ssh to the container (password is 1): `ssh root@172.17.0.2`
 
 # Reproducing Results on your machine (more detailed instructions)
 
-Here we present  the instructions to produce the results presented in Eurosys paper in more detail. 
+To make this step straightforward, we provide a container that already has all KV stores discussed in this paper installed. Here we present  the instructions to produce the results presented in Eurosys paper in more detail. 
 
-## Major Claims
-
-- (C1): In section 6.1, we show that Gadget faithfully simulates streaming state accesses and can produce workloads that exhibit the characteristics of real traces. In Figure 10, we analyze the generated traces `/home/gadget/build/src/gadgett/` and compare them to the real ones `/home/gadget/build/src/flinkt/` in terms of temporal and spatial locality. According to Figure 10,  Gadget produces a trace that consists of an almost identical number of unique sequences as the real trace. The distribution of stack distances in Gadget traces is also very close to that of real traces.
-
-- (C2): In section 6.2, we evaluate the KV store performance using YCSB workloads located in `/home/gadget/build/src/ycsbt`, real Flink workloads located in `/home/gadget/build/src/flinkt/`, and Gadget workloads. We observe that the performance (Throughput and latency) achieved with Gadget workloads is very close to that measured using the real traces for all operators and KV stores. On the contrary, when using the tuned YCSB workloads, the reported throughput and latency are significantly varied from the performance measured using the real traces.
-
-- (C3): Finally, in section 6.3, we evaluate the performance of KV stores for all operators using Gadget. Figure 13 plots throughput and tail latency for all kv stores. We see that RocksDB is significantly outperformed in six out of eleven workloads by both FASTER and BerkeleyDB.
-
-- (C4): In Section 6.3, we also evaluate the performance of existing KV stores using YCSB. Figure 12 plots throughput and tail latency for all KV stores.
 
 ## Downloads the Gadget container  and run it
+
 To evaluate Gadget, one should take the following steps:
 
-- Download the Gadget container from the following link: 
-  
-`https://drive.google.com/drive/folders/198RUZYpE0Sfb1Fn1wGeJDrK7M1N3eRQr`
+- Download the Gadget container from the following link: https://drive.google.com/drive/folders/198RUZYpE0Sfb1Fn1wGeJDrK7M1N3eRQr
 
 - Run the container using the following commands:
 
@@ -65,14 +64,26 @@ To evaluate Gadget, one should take the following steps:
 
   - Go to the gadget folder and run the experiments by running shell scripts designed for each experiment. `cd /home/gadget/build/src/`
 
--or get the container from the docker hub: 
-`sudo docker pull gadget7200/gadget007:1`
-- and run it : 
-`sudo docker run -t -i  gadget7200/gadget007:1  /bin/bash`
+- You may also get the container from the docker hub and run it:
+```
+sudo docker pull gadget7200/gadget007:1
+sudo docker run -t -i  gadget7200/gadget007:1  /bin/bash
+```
 
-## Experiments and expected results
 
-### Experiment (E1):
+# Major Claims
+
+- (C1): In section 6.1, we show that Gadget faithfully simulates streaming state accesses and can produce workloads that exhibit the characteristics of real traces. In Figure 10, we analyze the generated traces `/home/gadget/build/src/gadgett/` and compare them to the real ones `/home/gadget/build/src/flinkt/` in terms of temporal and spatial locality. According to Figure 10,  Gadget produces a trace that consists of an almost identical number of unique sequences as the real trace. The distribution of stack distances in Gadget traces is also very close to that of real traces.
+
+- (C2): In section 6.2, we evaluate the KV store performance using YCSB workloads located in `/home/gadget/build/src/ycsbt`, real Flink workloads located in `/home/gadget/build/src/flinkt/`, and Gadget workloads. We observe that the performance (Throughput and latency) achieved with Gadget workloads is very close to that measured using the real traces for all operators and KV stores. On the contrary, when using the tuned YCSB workloads, the reported throughput and latency are significantly varied from the performance measured using the real traces.
+
+- (C3): Finally, in section 6.3, we evaluate the performance of KV stores for all operators using Gadget. Figure 13 plots throughput and tail latency for all kv stores. We see that RocksDB is significantly outperformed in six out of eleven workloads by both FASTER and BerkeleyDB.
+
+- (C4): In Section 6.3, we also evaluate the performance of existing KV stores using YCSB. Figure 12 plots throughput and tail latency for all KV stores.
+
+# Experiments and expected results
+
+## Experiment (E1):
 
 **[Claim 1] [1 human-hour]**
 
@@ -92,7 +103,7 @@ This experiment runs Gadget to generate traces for three operators and compares 
 The results will be located in folder `firstExpr`. The generated figures should be similar to those shown in Figure 10.
 
 
-### Experiment (E2):
+## Experiment (E2):
 
 **[Claim 2] [3 human-hours]**
 
@@ -111,7 +122,7 @@ This experiment evaluates kv stores using gadget generated traces, YCSB traces (
 The results will be located in folder `secondExpr`. The generated figures should be similar to those shown in Figure 11.
 
 
-### Experiment (E3):
+## Experiment (E3):
 
 **[Claim 3] [3 human-hours]**
 
@@ -129,7 +140,7 @@ This experiment compares the performance of KV stores for all operators using Ga
 
 The results will be located in folder `thirdExpr`. The generated figures should be similar to those shown in Figure 13
 
-### Experiment (E4):
+## Experiment (E4):
 
 **[Claim 4] [1 human-hour]**
 
