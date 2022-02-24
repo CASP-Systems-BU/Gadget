@@ -14,6 +14,18 @@ The KV store determines the KV store that Gadget evaluates using the generated s
 Each main component has several parameters that need to be configured by the user. The Gadget compiler helps users set the required parameters by outputting error messages.
 
 
+## Table of Contents
+  - [Event Source](#event-source)
+    - [when event.generator.type is gadget](#when-eventgeneratortype--is-gadget)
+    - [when event.generator.type is tracefile](#when-eventgeneratortype--is-tracefile)
+  - [Set the operator](#set-the-operator)
+    - [operator type](#operator-type)
+    - [key popularity](#key-popularity)
+    - [key and value sizes](#key-and-value-sizes)
+  - [Evaluate a KV store or dump on file](#evaluate-a-kv-store-or-dump-on-file)
+  - [The distributions](#the-distributions)
+
+
 ## Event Source
 Gadget needs one event source for single-input operators (e.g., tumbling and sliding windows) and two event sources for two-inputs operators (eg., sliding  and tumbling joins)
 Gadget offers two types of event generators: 1) `gadget` 2) `tracefile`
