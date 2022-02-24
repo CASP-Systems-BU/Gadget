@@ -73,7 +73,8 @@ If you wish to compile Gadget and try it out on your system. You can follow the 
    
    `./gadget config.txt`. 
    
-   This example generates the state access workload for a tumbling window operator. The results go to a file named `gadget.log`. 
+   This example generates the state access workload for a tumbling window operator. The results go to a file named `gadget.log`. Please note that to evaluate a KV store using Gadget, the KV store must be installed on the system. (please see [here](./replayer) for installing KV stores). 
+
  
 
 ## Configure Gadget
