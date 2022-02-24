@@ -4,7 +4,19 @@ This repository contains instructions for reproducing the experiments in our Eur
 
 Gadget is a benchmark for an accurate evaluation of KV stores for stateful streaming applications. Gadget supports one or more configurable data sources and simulates the internal operations of a stream processing system to generate realistic state access workloads. Gadget generates and issues state access requests to the KV store while collecting performance measurements on latency and throughput. Gadget currently supports four KV stores with different design and performance characteristics: RocksDB, Lethe, FASTER, and BerkeleyDB.
 
-# Description & Requirements
+
+## Table of Contents
+  - [Description & Requirements](#description--requirements)
+  - [Set-up](#set-up)
+  - [Major Claims](#major-claims)
+  - [Experiments](#experiments)
+  - [Conference Paper](#conference-paper)
+  - [License](#license)
+
+
+
+
+## Description & Requirements
 
 **How to access**
 
@@ -23,9 +35,9 @@ We use Ubuntu 20.04 (Linux kernel version5.4). To evaluate a KV store performanc
 
 In our experiments, we use traces from Google's Borg system. The provided container includes these traces.
 
-# Set-up
+## Set-up
 
-## Evaluation workflow
+### Evaluation workflow
 
 **Evaluate in provided docker container**
 
@@ -69,7 +81,7 @@ sudo ./install.sh
 3. To run gadget, you can use one of our config files provided in `configs` folder and run Gadget by `./gadget config.txt`. This example generates the state access workload for a tumbling window operator. The results go to a file named `gadget.log`. Note that to evaluate a KV store using Gadget, the KV store must be installed on the system.
 
 
-# Major Claims
+## Major Claims
 
 - (C1): In section 6.1, we show that Gadget faithfully simulates streaming state accesses and can produce workloads that exhibit the characteristics of real traces. In Figure 10, we analyze the generated traces and compare them to the real ones in terms of temporal and spatial locality. According to Figure 10,  Gadget produces a trace that consists of an almost identical number of unique sequences as the real trace. The distribution of stack distances in Gadget traces is also very close to that of real traces.
 
@@ -151,7 +163,7 @@ python3 runfig12.py
 
 The generated figures should be similar to those shown in Figure 12, but note that different hardware may lead to different result in some cases.
 
-# Conference Paper
+## Conference Paper
 
 A New Benchmark Harness for Systematic and Robust Evaluation of Streaming State Stores. Esmail Asyabi, Yuanli Wang, John Liagouris, Vasiliki Kalavri, Azer Bestavros. EuroSys 2022 (to appear)
 
