@@ -5,8 +5,8 @@ Gadget results presented in Eurossys 22 conference can be reproduced in two ways
 
 
 # Table of Contents
-  - [Reproducing Results on Cloudlab](#description--requirements)
-  - [Reproducing Results on your machine]()
+  - [Reproducing Results on Cloudlab](#reproducing-results-on-cloudlab)
+  - [Reproducing results on your machine by containers](#reproducing-results-on-your-machine-by-containers)
   - [Major Claims](#major-claims)
   - [Experiments and expected results](#experiments-and-expected-results)
 
@@ -41,7 +41,7 @@ To run the container : `sudo docker run -t -i gadget7200/gadget7200:1 /bin/bash`
 To ssh to the container (password is 1): `ssh root@172.17.0.2`
 
 
-# Reproducing Results on your machine (more detailed instructions)
+# Reproducing results on your machine by containers
 
 To make this step straightforward, we provide a container that already has all KV stores discussed in this paper installed. Here we present  the instructions to produce the results presented in Eurosys paper in more detail. 
 
