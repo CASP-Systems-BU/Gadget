@@ -51,8 +51,6 @@ In our experiments, we use traces from Google's Borg system. These traces can be
 
 ### Install and Run Gadget 
 
-If you wish to compile Gadget, try it out on your system. You can follow the following steps:
-
 2. compile Gadget:
 ```
     git clone git@github.com:CASP-Systems-BU/Gadget.git
