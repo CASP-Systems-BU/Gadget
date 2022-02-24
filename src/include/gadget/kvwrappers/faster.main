@@ -595,9 +595,6 @@ public:
 private:
     std::string connectionString_;
     std::string kDBPath;
-    rocksdb::DB* db;
-    rocksdb::Options options;
-    rocksdb::Status s;
     TimeVar startTime, finishTime;
     TimeVar oprStartTime, oprFinishTime;
     std::string response;
