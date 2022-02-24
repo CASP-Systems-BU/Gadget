@@ -7,11 +7,11 @@ Gadget is a benchmark for an accurate evaluation of KV stores for stateful strea
 
 ## Table of Contents
   - [Description & Requirements](#description--requirements)
-  - [Install and Run Gadget](#Install-and-Run-Gadget)
-  - [Configure Gadget](#Configure-Gadget)
-  - [Experiments with Gadget](#Experiments-with-Gadget)
-  - [Gadget Source Code](#Gadget-Source-Code)
-  - [Reproducing the EuroSys22 results](#Reproducing-the-EuroSys22-results)
+  - [Reproducing the EuroSys22 results](#reproducing-the-eurosys22-results)
+  - [Install and Run Gadget](#install-and-run-gadget)
+  - [Configure Gadget](#configure-gadget)
+  - [Experiments with Gadget](#experiments-with-gadget)
+  - [Gadget Source Code](#gadget-source-code)
   - [Conference Paper](#conference-paper)
   - [License](#license)
 
@@ -48,8 +48,18 @@ We use Ubuntu 20.04 (Linux kernel version5.4). To evaluate a KV store performanc
 
 In our experiments, we use traces from Google's Borg system. These traces can be found here: Read more [here](./traces)
 
+##  Reproducing the EuroSys22 results
 
-### Install and Run Gadget 
+We have prepared a docker image (with compiled Gadget and DBs installed) for reviewers. Please see [here](./reproduceEuroSysResults) for a detailed description of reproducing the  results presented in the EuroSys22 conference.
+
+## Install and Run Gadget
+
+If you wish to compile Gadget and try it out on your system. You can follow the following steps:
+
+1. Install dependencies. We have provided a script to install all the dependency libraries and the 4 KV stores we used in the paper(RocksDB, Lethe, FASTER, BerkeleyDB) to `./` directory. But for Lethe and BerkeleyDB, users will need to manually download their archive file in advance, since these can not be downloaded by script.
+```
+sudo ./install.sh
+```
 
 2. compile Gadget:
 ```
@@ -70,12 +80,8 @@ In our experiments, we use traces from Google's Borg system. These traces can be
    
    This example generates the state access workload for a tumbling window operator. The results go to a file named `gadget.log`. 
    
-   Please note that to evaluate a KV store using Gadget, the KV store must be installed on the system (please see [here](./replayer) for installing KV stores). 
+   Please note that to evaluate a KV store using Gadget, the KV store must be installed on the system. 
    
-   Please see [here](./configs) for  configuring and using  Gadget 
-   
-   Please see [here](./experiments) for experimenting with Gadget
-
 
 ## Configure Gadget
 Please see [here](./configs) for a detailed description of the Gadget configuration.
@@ -85,10 +91,6 @@ Please see [here](./experiments) for a detailed description of performing experi
 
 ## Gadget Source Code
 Please see [here](./src) for a detailed description of the Gadget source code.
-
-##  Reproducing the EuroSys22 results
-Please see [here](./reproduceEuroSysResults) for a detailed description of reproducing the  results presented in the EuroSys22 conference.
-
 
 ## Conference Paper
 
