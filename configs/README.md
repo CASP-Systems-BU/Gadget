@@ -1,9 +1,9 @@
 # Configure Gadget
 
 A Gadget user configures Gadget by setting three main elements:
-1) Event source - There can be two event sources
-2) operators type
-3) KV store
+- Event source - There can be two event sources
+- operators type
+- KV store
 
 The events source tells Gadget the sources of events. In Gadget, events can come from a trace (e.g., Google borg traces), or Gadget itself can generate events.
 
