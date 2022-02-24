@@ -77,7 +77,7 @@ We have prepared a docker image (with compiled Gadget and DBs installed) for rev
 
 If you wish to compile Gadget, try it out on your system. You can follow the following steps:
 
-1. Install dependencies. We have provided a script to install all the dependency libraries and the 4 KV stores we used in the paper(RocksDB, Lethe, FASTER, BerkeleyDB). But for Lethe and BerkeleyDB, users will need to manually download their archive file.
+1. Install dependencies. We have provided a script to install all the dependency libraries and the 4 KV stores we used in the paper(RocksDB, Lethe, FASTER, BerkeleyDB) to `./` directory. But for Lethe and BerkeleyDB, users will need to manually download their archive file.
 ```
 sudo ./install.sh
 ```
