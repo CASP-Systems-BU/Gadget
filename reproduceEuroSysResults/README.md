@@ -45,10 +45,7 @@ To ssh to the container (password is 1): `ssh root@172.17.0.2`
 
 To make this step straightforward, we provide a container that already has all KV stores discussed in this paper installed. Here we present  the instructions to produce the results presented in Eurosys paper in more detail. 
 
-
-## Downloads the Gadget container  and run it
-
-To evaluate Gadget, one should take the following steps:
+To evaluate Gadget, you can take the following steps to download the Gadget container and run it:
 
 - Download the Gadget container from the following link: https://drive.google.com/drive/folders/198RUZYpE0Sfb1Fn1wGeJDrK7M1N3eRQr
 
@@ -64,11 +61,12 @@ To evaluate Gadget, one should take the following steps:
 
   - Go to the gadget folder and run the experiments by running shell scripts designed for each experiment. `cd /home/gadget/build/src/`
 
-- You may also get the container from the docker hub and run it:
-```
-sudo docker pull gadget7200/gadget007:1
-sudo docker run -t -i  gadget7200/gadget007:1  /bin/bash
-```
+- Alternatively, you may also get the container from the docker hub and run it:
+
+    ```
+    sudo docker pull gadget7200/gadget007:1
+    sudo docker run -t -i  gadget7200/gadget007:1  /bin/bash
+    ```
 
 
 # Major Claims
