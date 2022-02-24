@@ -56,7 +56,8 @@ In our experiments, we use traces from Google's Borg system. These traces can be
 
 If you wish to compile Gadget and try it out on your system. You can follow the following steps:
 1. install build essentials (e.g., compiler):
- 'sudo sh install_build_essentals.sh'
+
+ `sudo sh install_build_essentals.sh`
 
 2. compile Gadget:
 ```
