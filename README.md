@@ -188,7 +188,7 @@ The generated figures should be similar to those shown in Figure 12, but note th
 
 ## Conference Paper
 
-A New Benchmark Harness for Systematic and Robust Evaluation of Streaming State Stores. Esmail Asyabi, Yuanli Wang, John Liagouris, Vasiliki Kalavri, Azer Bestavros. EuroSys 2022 (to appear)
+[**EuroSys**] A New Benchmark Harness for Systematic and Robust Evaluation of Streaming State Stores. Esmail Asyabi, Yuanli Wang, John Liagouris, Vasiliki Kalavri, Azer Bestavros. Proceedings of the 17th European Conference on Computer Systems, Rennes, France, April, 2022.
 
 ## License
 
