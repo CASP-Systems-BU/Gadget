@@ -56,12 +56,7 @@ In our experiments, we use traces from Google's Borg system. These traces can be
 
 If you wish to compile Gadget and try it out on your system. You can follow the following steps:
 
-1. Install dependencies. We have provided a script to install all the dependency libraries and the 4 KV stores we used in the paper(RocksDB, Lethe, FASTER, BerkeleyDB) to `./` directory. But for Lethe and BerkeleyDB, users will need to manually download their archive file in advance, since these can not be downloaded by script.
-```
-sudo ./install.sh
-```
-
-2. compile Gadget:
+1. compile Gadget:
 ```
     git clone git@github.com:CASP-Systems-BU/Gadget.git
     cd Gadget
@@ -72,7 +67,7 @@ sudo ./install.sh
     cd src
 ```
 
-3. To run gadget, you can use one of our config files provided in `configs` folder([here](./configs)).  
+2. To run gadget, you can use one of our config files provided in `configs` folder([here](./configs)).  
    
    Run Gadget by:
    
