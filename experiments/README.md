@@ -28,17 +28,17 @@ cp experiments/CMake.Rocks src/CMakeLists.txt
 
 
 
-## Experiment with RocksDB
-- Install RocksDB on your system
+## Experiment with Lethe
+- Install Lethe on your system
 - Do the following commands to copy the RocksDB wrapper:
 ```
 cd src/include/gadget/kvwrappers/
 cp rocksdb.main RocksDBWrapper.h 
 cd -
 ```
-- Now copy the content of CMake.Rocks to the Gadget's main CMake file
+- Now copy the content of CMake.Lethe to the Gadget's main CMake file
 ```
-cp experiments/CMake.Rocks src/CMakeLists.txt 
+cp experiments/CMake.Lethe src/CMakeLists.txt 
 ```
 - Change lines 65 of `src/CMakeLists.txt` to the path of your installed RocksDB
 - Now compile Gadget and user a config file to do the experiment. In the config file, set the wrapper type of `rocksdb` (note that lethe and rocksdb use the same wrapper)
