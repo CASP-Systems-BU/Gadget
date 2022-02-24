@@ -104,7 +104,7 @@ cd ../../..
 
 #### Lethe
 
-- Download. User need to manually download `vkalavri-rocksdb-fade-10592ede52ab.zip` and place it in `./replayer/`.
+- Download. User need to manually download `vkalavri-rocksdb-fade-10592ede52ab.zip` and place it in `./replayer/`. Since lethe is not open-sourced yet, you can [contact the author](http://disc-projects.bu.edu/lethe/) to get this file.
 
 ```
 unzip vkalavri-rocksdb-fade-10592ede52ab.zip
