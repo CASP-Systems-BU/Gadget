@@ -22,13 +22,15 @@ file(GLOB_RECURSE INCLUDES src/include/*.h)
 file(GLOB_RECURSE SOURCES LIST_DIRECTORIES true *.h *.cpp)
 set(SOURCES ${SOURCES})
 
-########################################################## setup faster
-### setup faster
-message("--- locating faster dependencies ---")
-find_library(FASTERLIB faster /home/akita/dbs/FASTER/cc/build)
-set(FASTERDIR /home/akita/dbs/FASTER/cc/src)
-message("faster   lib: ${FASTERLIB}")
+########################################################## setup lethe
+### setup lethe
+message("--- locating lethe dependencies ---")
+set(LETHE_LIBRARIES /home/akita/dbs/lethe/librocksdb.a)
+set(LETHE_INCLUDE_DIR /home/akita/dbs/lethe/include)
+set(LETHE_WORKING_BRANCH /home/akita/dbs/lethe/examples/__working_branch)
 
+message("lethe   lib: ${LETHE_LIBRARIES}")
+message("lethe   inc: ${LETHE_INCLUDE_DIR}")
 
 
 
@@ -107,16 +109,26 @@ add_executable(gadget core/main.cpp
         include/gadget/kvwrappers/berecklyDB.h
         include/gadget/operator/operators/ycsbReplayer.h
         include/gadget/operator/operators/flinkReplayer.h
+        #  change the following paths  based on the location of the LetheDB
+         /home/akita/dbs/lethe/examples/__working_branch/stats.cc
+         /home/akita/dbs/lethe/examples/__working_branch/emu_environment.cc
         )
 # make gadget  source a library to use it in google tests
 add_library(${BINARY}_lib STATIC ${SOURCES})
 message(${BINARY})
 
+# turn the following line only when you want rocksDB or lethe with custom merge operator
+target_compile_options(gadget PUBLIC -fno-rtti)
 
 
-# add faster
-include_directories(gadget   ${FASTERDIR})
-target_link_libraries(gadget ${FASTERLIB})
+# add lethe
+include_directories(gadget   ${LETHE_INCLUDE_DIR})
+target_link_libraries(gadget ${LETHE_LIBRARIES})
+include_directories(gadget ${LETHE_WORKING_BRANCH})
+message("lethe   lib: ${LETHE_LIBRARIES}")
+message("lethe   inc: ${LETHE_INCLUDE_DIR}")
+message("lethe   inc2: ${LETHE_WORKING_BRANCH}")
+
 
 #######################################
 
