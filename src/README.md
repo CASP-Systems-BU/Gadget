@@ -10,7 +10,7 @@ Gadget source code contains three main folders explained in detail:
 
 - [Project Structure](#Gadget-structure)
   - [Gadget core directory](#The-core-folder)
-  - [Gadget Include directory](#include)
+  - [Gadget include directory](#The-include-folder)
     - [distributions](#distributions)
     - [event](#event)
     - [kvwrappers](#kvwrappers)
