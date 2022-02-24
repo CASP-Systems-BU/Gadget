@@ -1,5 +1,7 @@
 # Gadget: A New Benchmark Harness for Systematic and Robust Evaluation of Streaming State Stores
 
+This repository contains instructions for reproducing the experiments in our EuroSys'22 paper "A New Benchmark Harness for Systematic and Robust Evaluation of Streaming State Stores".
+
 Gadget is a benchmark for an accurate evaluation of KV stores for stateful streaming applications. Gadget supports one or more configurable data sources and simulates the internal operations of a stream processing system to generate realistic state access workloads. Gadget generates and issues state access requests to the KV store while collecting performance measurements on latency and throughput. Gadget currently supports four KV stores with different design and performance characteristics: RocksDB, Lethe, FASTER, and BerkeleyDB.
 
 # Description & Requirements
