@@ -4,9 +4,9 @@ Gadget can be used to generate state store workload for operators it currently s
 
 # Table of Contents
 
-- [Experiment with RocksDB](#ExperimentwithRocksDB)
-- [Experiment with Faster](#ExperimentwithFaster)
-- [Experiment with BerkeleyDB](#ExperimentwithBerkeleyDB)
+- [Experiment with RocksDB](#Experiment-with-RocksDB)
+- [Experiment with Faster](#Experiment-with-Faster)
+- [Experiment with BerkeleyDB](#Experiment-with-BerkeleyDB)
 
 
 ## Experiment with RocksDB
