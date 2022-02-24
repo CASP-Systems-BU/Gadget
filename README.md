@@ -20,13 +20,12 @@ Gadget is a benchmark for an accurate evaluation of KV stores for stateful strea
 
 ```bash
 > tree .
-├── configs                # 
+├── configs                # Instructions on how to configure Gadget
 ├── experiments
 │   ├── cmakes             # 
 ├── replayer               # replay ycsb trace on KV stores
 ├── src                    # Gadget Source Code
-├── tests                  # Unit Test of Gadget
-└── traces                 # 
+└── tests                  # Unit Test of Gadget
 ```
 
 
