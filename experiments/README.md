@@ -5,6 +5,7 @@ Gadget can be used to generate state store workload for operators it currently s
 # Table of Contents
 
 - [Experiment with RocksDB](#Experiment-with-RocksDB)
+- [Experiment with Lethe](#Experiment-with-lethe)
 - [Experiment with Faster](#Experiment-with-Faster)
 - [Experiment with BerkeleyDB](#Experiment-with-BerkeleyDB)
 
@@ -23,6 +24,24 @@ cp experiments/CMake.Rocks src/CMakeLists.txt
 ```
 - Change lines 65 of `src/CMakeLists.txt` to the path of your installed RocksDB
 - Now compile Gadget and user a config file to do the experiment. In the config file, set the wrapper type of `rocksdb`
+
+
+
+
+## Experiment with RocksDB
+- Install RocksDB on your system
+- Do the following commands to copy the RocksDB wrapper:
+```
+cd src/include/gadget/kvwrappers/
+cp rocksdb.main RocksDBWrapper.h 
+cd -
+```
+- Now copy the content of CMake.Rocks to the Gadget's main CMake file
+```
+cp experiments/CMake.Rocks src/CMakeLists.txt 
+```
+- Change lines 65 of `src/CMakeLists.txt` to the path of your installed RocksDB
+- Now compile Gadget and user a config file to do the experiment. In the config file, set the wrapper type of `rocksdb` (note that lethe and rocksdb use the same wrapper)
 
 
 ## Experiment with Faster
