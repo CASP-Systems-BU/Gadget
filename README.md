@@ -84,7 +84,7 @@ sudo ./install.sh
 
 2. compile Gadget
 ```
-    Downlaod gadget 
+    git clone git@github.com:CASP-Systems-BU/Gadget.git
     cd Gadget
     mkdir build 
     cd build
