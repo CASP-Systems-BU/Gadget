@@ -37,9 +37,7 @@ In our experiments, we use traces from Google's Borg system. The provided contai
 
 ## Set-up
 
-### Evaluation workflow
-
-**Evaluate in provided docker container**
+### Evaluate in provided docker container
 
 We have prepared a docker image (with compiled Gadget and DBs installed) for reviewers. To evaluate Gadget, one should take the following steps:
 
@@ -58,7 +56,7 @@ We have prepared a docker image (with compiled Gadget and DBs installed) for rev
 5. Go to the gadget folder and run the experiments by running shell scripts designed for each experiment. `cd /home/gadget/build/src/`
 
 
-**Run Gadget on your own system**
+### Run Gadget on your own system
 
 If you wish to compile Gadget, try it out on your system. You can follow the following steps:
 
@@ -91,7 +89,7 @@ sudo ./install.sh
 
 - (C4): In Section 6.3, we also evaluate the performance of existing KV stores using YCSB. Figure 12 plots throughput and tail latency for all KV stores.
 
-## Experiments
+## Experiments and expected results
 
 ### Experiment (E1): [Claim 1] [1 human-hour]: 
 
