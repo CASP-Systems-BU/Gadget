@@ -43,9 +43,7 @@ To ssh to the container (password is 1): `ssh root@172.17.0.2`
 
 # Reproducing results on your machine by containers
 
-To make this step straightforward, we provide a container that already has all KV stores discussed in this paper installed. Here we present  the instructions to produce the results presented in Eurosys paper in more detail. 
-
-To evaluate Gadget, you can take the following steps to download the Gadget container and run it:
+To evaluate Gadget on your machine, you can take the following steps to download the Gadget container and run it:
 
 - Download the Gadget container from the following link: https://drive.google.com/drive/folders/198RUZYpE0Sfb1Fn1wGeJDrK7M1N3eRQr
 
