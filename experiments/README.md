@@ -23,7 +23,7 @@ cd -
 cp experiments/CMake.Rocks src/CMakeLists.txt 
 ```
 - Change lines 28-29 of `src/CMakeLists.txt` to the path of your installed RocksDB
-- Now compile Gadget and user a config file to do the experiment. In the config file, set the wrapper type of `rocksdb`
+- Now compile Gadget and use a config file to do the experiment. In the config file, set the wrapper type of `rocksdb`
 
 
 
