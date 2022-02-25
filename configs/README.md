@@ -92,7 +92,7 @@ expected.num.operations = 100000
 window.length = 5
 #sliding.length = 1
 ```
-'expected.num.operations' determines the number of state access operations that will be generated.
+`expected.num.operations` determines the number of state access operations that will be generated.
 
 ### key popularity
 Gadget users can define the key popularity of state objects (ie., window IDs). In file `config.txt`  key popularity is set to sequential, meaning that the key of  the newly created window (state) is set to LastWindowID+1. Gadget Users do not need to change this unless exploring novel window management strategies.
@@ -139,7 +139,7 @@ If you set the distribution to  constant, the parameter `constant` needs to be d
 
 If you set the distribution to  normal, the parameters `sd` and `mean` need to be defined.
 
-If you set the distribution to normal, the parameters `a` and `b` need to be defined, where a is the lower bound, and b is the upper bound.
+If you set the distribution to uniform, the parameters `a` and `b` need to be defined, where a is the lower bound, and b is the upper bound.
 
 If you set the distribution to  hotspot, the parameters `hotspotfraction` and `hotoperationfraction` need to be defined.
 
