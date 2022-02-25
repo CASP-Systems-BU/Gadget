@@ -83,7 +83,7 @@ To evaluate Gadget on your machine, you can take the following steps to download
 
 **[Claim 1] [1 human-hour]**
 
-This experiment runs Gadget to generate traces for three operators and compares it with real traces (located in `/home/gadget/build/src/flinkt/`) in terms of spatial and temporal locality.
+This experiment  compares  Gadget traces with real traces (located in `/home/gadget/build/src/flinkt/`) in terms of spatial and temporal locality.
 
 - run the container as described before
 
