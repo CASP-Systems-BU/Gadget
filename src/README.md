@@ -33,8 +33,10 @@ Gadget source code contains three main folders explained in detail:
 └── operators
 ```
 ## The core folder
-In the core folder, `main.cpp`  coordinates all elements of Gadget
+In the core folder, `main.cpp`  coordinates all elements of Gadget.
+
 `config.h`  is a compiler for Gadget config files. Its main goal is to parse the Gadget config file and guides users if something is missing from the config file by outputting appropriate error messages.
+
 `PerformanceMetrics.cpp` conducts the latency measurements. For example, it calculates the average or median response times.
 
 ## The include folder
