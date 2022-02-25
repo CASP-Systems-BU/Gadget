@@ -37,7 +37,7 @@ public:
         // Gedget clock is set to zero
         gadgetTimeUnit_ = 0;
         totalNumOfGeneratedEvents_ = 0;
-
+        currentWaterMark_ = 0;
         waterMarkFrequency_ = params->waterMarkFrequency;
 
     }
