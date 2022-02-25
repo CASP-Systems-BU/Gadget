@@ -49,7 +49,7 @@ We use Ubuntu 20.04 (Linux kernel version5.4). To evaluate a KV store performanc
 In our experiments, we use traces from Google's Borg system. These traces can be found here: Read more [here](./traces)
 
 ##  Reproducing the EuroSys22 results
-**For reviewers, we have prepared a CloudLab profile and a container image (with compiled Gadget and KV stores installed). Please see a detailed description of reproducing the results presented at the EuroSys22 conference [here](./reproduceEuroSysResults).**
+**For reviewers, we have prepared a CloudLab profile and a container image (with Gadget and KV stores). Please see a detailed description of reproducing the results presented at the EuroSys22 conference [here](./reproduceEuroSysResults).**
 
 
 ## Install and Run Gadget
