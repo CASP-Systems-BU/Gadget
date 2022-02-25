@@ -23,7 +23,7 @@ cd -
 cp experiments/CMake.Rocks src/CMakeLists.txt 
 ```
 - Change lines 28-29 of `src/CMakeLists.txt` to the path of your installed RocksDB
-- Now compile Gadget and use a config file to do the experiment. In the config file, set the wrapper type of `rocksdb`
+- Now compile Gadget and use a config file to do the experiment. In the config file, set the wrapper type to `rocksdb`
 
 
 
@@ -41,7 +41,7 @@ cd -
 cp experiments/CMake.Lethe src/CMakeLists.txt 
 ```
 - Change lines 28-29-30 of `src/CMakeLists.txt` to the path of your installed Lethe
-- Now compile Gadget and use a config file to do the experiment. In the config file, set the wrapper type of `rocksdb` (please note that lethe and rocksdb use the same wrapper)
+- Now compile Gadget and use a config file to do the experiment. In the config file, set the wrapper type to `rocksdb` (please note that lethe and rocksdb use the same wrapper)
 
 
 ## Experiment with Faster
@@ -57,7 +57,7 @@ cd -
 cp experiments/CMake.Faster  src/CMakeLists.txt 
 ```
 - Change lines 28-29 of `src/CMakeLists.txt` to the path of your installed Faster
-- Now compile Gadget and use a config file to do the experiment. In the config file, set the wrapper type of `faster`
+- Now compile Gadget and use a config file to do the experiment. In the config file, set the wrapper type to `faster`
 
 ## Experiment with BerkeleyDB
 - Install BerkeleyDB on your system
@@ -72,4 +72,4 @@ cd -
 cp experiments/CMake.BerkeleyDB  src/CMakeLists.txt 
 ```
 - Change lines 27-28 of `rc/CMakeLists.txt` to the path of your installed BerkeleyDB
-- Now compile Gadget and use a config file to do the experiment. In the config file, set the wrapper type of `berkeley`
+- Now compile Gadget and use a config file to do the experiment. In the config file, set the wrapper type to `berkeley`
