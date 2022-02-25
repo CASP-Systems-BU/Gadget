@@ -47,9 +47,9 @@ Distributions folder provides all implementation for all distribution needed by 
 ### event
 event folders contains two Gadget main event Generator: `gadgetEventGenerator.h` and `tarceEvents.h`
 
-`tarceEvents.h` reads event files . Gadget gets events from event traces and generates the corresponding state access workloads. Users need to configure gadgets to read events from event traces. 
+`tarceEvents.h` reads event files . Gadget gets events from event traces and generates the corresponding state access workloads. Users need to configure Gadget to read events from event traces. 
 
-`gadgetEventGenerator.h` genrates users desisred events. It lets users configure the Gadget to generate events with the specific key and timestamp distribution. It also allows users to specify the watermark frequency and out-of-order events. 
+`gadgetEventGenerator.h` genrates users desired events. It lets users configure the Gadget to generate events with the specific key and timestamp distribution. It also allows users to specify the watermark frequency and out-of-order events. 
 
 ### kvwrappers
 Gadget wrappers include wrappers for `RocksDB` , `Faster`, and `BerkeleyDB`. A wrappers' main goal is to translate Gadget generated operation (get-put-delete- merge) to the corresponding operations in a KV store. Gadget users can easily add their wrappers to the new KV store. They need to write a wrapper that translates gadget operations to the new KV store operations. Finally, they need to register their wrapper in `wrapperBuilder.h`
