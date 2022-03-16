@@ -1,6 +1,6 @@
 # Gadget: A New Benchmark Harness for Systematic and Robust Evaluation of Streaming State Stores
 
-<a href="https://doi.org/10.5281/zenodo.6347736"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.6347736.svg">
+<a href="https://doi.org/10.5281/zenodo.6347736"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.6347736.svg"> </a>
 
 This repository contains instructions for reproducing the experiments in our EuroSys'22 paper "A New Benchmark Harness for Systematic and Robust Evaluation of Streaming State Stores".
 
