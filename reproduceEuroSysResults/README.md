@@ -45,7 +45,7 @@ To ssh to the container (password is 1): `ssh root@172.17.0.2`
 
 To evaluate Gadget on your machine, you can take the following steps to download the Gadget container and run it:
 
-- Download the Gadget container from the following link: https://drive.google.com/drive/folders/198RUZYpE0Sfb1Fn1wGeJDrK7M1N3eRQr
+- Download the Gadget container from the following link: https://drive.google.com/file/d/1DsIbsN-O3mkEZFMEeIpPvWwVtWUcFtx7
 
 - Run the container using the following commands:
 
